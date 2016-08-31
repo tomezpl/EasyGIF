@@ -1,0 +1,2 @@
+# EasyGIF
+GIF capture app
