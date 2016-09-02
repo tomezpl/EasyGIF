@@ -16,7 +16,14 @@ void ImageSaver::LoadData(std::vector<std::vector<uint8_t*>> data)
 	{
 		for(unsigned short x = 0; x < data[y].size(); x++)
 		{
-			m_Image.setPixel(x, y, sf::Color(data[y][x][0], data[y][x][1], data[y][x][2], data[y][x][3]));
+			m_Image.setPixel(x, y, sf::Color((int)(data[y][x][0]), (int)(data[y][x][1]), (int)(data[y][x][2]), 255));
+
+			std::cout << "Pixel (" << x+1 << ", " << y+1 << ") has colour (" 
+				  << (int)(m_Image.getPixel(x, y).r) << ", "
+				  << (int)(m_Image.getPixel(x, y).g) << ", "
+				  << (int)(m_Image.getPixel(x, y).b) << ", "
+				  << (int)(m_Image.getPixel(x, y).a) << ")"
+				  << std::endl;
 		}
 	}
 }
