@@ -1,4 +1,4 @@
-#include "ImageSaver.hpp"
+#include "image_saver.hpp"
 
 using namespace EasyGIF;
 

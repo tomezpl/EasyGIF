@@ -1,5 +1,5 @@
-#include "ImageGrabber.hpp"
-#include "ImageSaver.hpp"
+#include "img/image_grabber.hpp"
+#include "img/image_saver.hpp"
 
 using namespace EasyGIF;
 

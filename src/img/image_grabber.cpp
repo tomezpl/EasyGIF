@@ -1,4 +1,4 @@
-#include "ImageGrabber.hpp"
+#include "image_grabber.hpp"
 #include <iostream>
 
 using namespace EasyGIF;
