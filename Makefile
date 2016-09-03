@@ -9,6 +9,10 @@ CC=g++ -std=c++11
 CURL_DEV=`pkg-config --cflags curlpp`
 CURL_LIB=`pkg-config --libs curlpp`
 
+## CRYPTO++
+CRYP_DEV=`pkg-config --cflags libcrypto++`
+CRYP_LIB=`pkg-config --libs libcrypto++`
+
 ## SFML
 SFML_DEV=`pkg-config --cflags sfml-all`
 SFML_LIB=`pkg-config --libs sfml-all`
@@ -35,6 +39,13 @@ image_saver.o: src/ImageSaver.cpp
 
 image_grabber.o: src/ImageGrabber.cpp
 	$(CC) -c -o./build/obj/image_grabber.o ./src/ImageGrabber.cpp $(XCB_DEV)
+
+test_upload: md5.o gyazo.o src/test_upload.cpp
+	$(CC) -o./build/bin/test_upload ./build/obj/md5.o ./build/obj/gyazo.o ./src/test_upload.cpp $(CRYP_LIB) $(CURL_LIB)
+md5.o: src/sec/md5.cpp
+	$(CC) -c -o./build/obj/md5.o ./src/sec/md5.cpp $(CRYP_DEV)
+gyazo.o: src/net/gyazo.cpp
+	$(CC) -c -o./build/obj/gyazo.o ./src/net/gyazo.cpp $(CURL_DEV)
 
 rmdirs:
 	rm ./build --recursive
