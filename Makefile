@@ -34,11 +34,11 @@ test_build: mkdirs
 test_save: image_grabber.o image_saver.o src/test_save.cpp
 	$(CC) -o./build/bin/test_save ./build/obj/image_grabber.o ./build/obj/image_saver.o ./src/test_save.cpp $(XCB_LIB) $(SFML_LIB)
 
-image_saver.o: src/ImageSaver.cpp
-	$(CC) -c -o./build/obj/image_saver.o ./src/ImageSaver.cpp $(SFML_DEV)
+image_saver.o: src/img/image_saver.cpp
+	$(CC) -c -o./build/obj/image_saver.o ./src/img/image_saver.cpp $(SFML_DEV)
 
-image_grabber.o: src/ImageGrabber.cpp
-	$(CC) -c -o./build/obj/image_grabber.o ./src/ImageGrabber.cpp $(XCB_DEV)
+image_grabber.o: src/img/image_grabber.cpp
+	$(CC) -c -o./build/obj/image_grabber.o ./src/img/image_grabber.cpp $(XCB_DEV)
 
 test_upload: md5.o gyazo.o src/test_upload.cpp
 	$(CC) -o./build/bin/test_upload ./build/obj/md5.o ./build/obj/gyazo.o ./src/test_upload.cpp $(CRYP_LIB) $(CURL_LIB)
