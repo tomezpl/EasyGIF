@@ -57,17 +57,17 @@ std::vector<std::vector<uint8_t*>> ImageGrabber::Grab()
 			unsigned long currentPixel = xcb_image_get_pixel(m_Img, x, y);
 			uint8_t* convertedPixel = new uint8_t[4];
 
-			convertedPixel[0] = (currentPixel & 0x000000ff);
+			convertedPixel[2] = (currentPixel & 0x000000ff);
 			convertedPixel[1] = (currentPixel & 0x0000ff00) >> 8;
-			convertedPixel[2] = (currentPixel & 0x00ff0000) >> 16;
+			convertedPixel[0] = (currentPixel & 0x00ff0000) >> 16;
 			convertedPixel[3] = (currentPixel & 0xff000000) >> 24;
 
-			std::cout << "Pixel (" << x+1 << ", " << y+1 << ") has colour (" 
+			/*std::cout << "Pixel (" << x+1 << ", " << y+1 << ") has colour (" 
 				  << (int)convertedPixel[0] << ", "
 				  << (int)convertedPixel[1] << ", "
 				  << (int)convertedPixel[2] << ", "
 				  << (int)convertedPixel[3] << ")"
-				  << std::endl;
+				  << std::endl;*/
 
 			currentLine.push_back(convertedPixel);
 			//delete[] convertedPixel;
