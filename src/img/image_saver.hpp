@@ -4,13 +4,14 @@
 #include <SFML/Graphics/Image.hpp>
 #include <iostream>
 #include <vector>
+#include "image_frame.hpp"
 
 namespace EasyGIF {
 	class ImageSaver {
 	private:
 		sf::Image m_Image;
 	public:
-		void LoadData(std::vector<std::vector<uint8_t*>> data);
+		void LoadData(ImageFrame frame);
 		bool Save(std::string fileName);
 	};
 }
