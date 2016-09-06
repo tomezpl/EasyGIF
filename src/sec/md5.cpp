@@ -1,5 +1,4 @@
 #include "md5.hpp"
-#include <iostream>
 namespace EasyGIF{
 	namespace Hashing{
 		std::string GetFileMD5(const char *filename){
