@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 #include <vector>
+#include <iostream>
 #include <SFML/Graphics/Image.hpp>
 
 namespace EasyGIF {

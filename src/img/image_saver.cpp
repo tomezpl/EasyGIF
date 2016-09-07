@@ -13,14 +13,15 @@ void ImageSaver::LoadData(ImageFrame frame)
 	//}
 	uint8_t* buf = frame.GetBuffer();
 
-	for(unsigned short y = 0; y < frame.GetHeight(); y++)
+	for(unsigned long y = 0; y < frame.GetHeight(); y++)
 	{
-		for(unsigned short x = 0; x < frame.GetWidth(); x++)
+		unsigned long realX = 0;
+		for(unsigned long x = y * 4 * frame.GetWidth(); x < (y + 1) * frame.GetWidth() * 4; x += 4)
 		{
-			uint8_t currR = buf[(x * 4) + (frame.GetWidth() * y)];
-			uint8_t currG = buf[(x * 4) + (frame.GetWidth() * y) + 1];
-			uint8_t currB = buf[(x * 4) + (frame.GetWidth() * y) + 2];
-			m_Image.setPixel(x, y, sf::Color((int)(currR), (int)(currG), (int)(currB), 255));
+			uint8_t currR = buf[x];
+			uint8_t currG = buf[x + 1];
+			uint8_t currB = buf[x + 2];
+			m_Image.setPixel(realX, y, sf::Color((int)(currR), (int)(currG), (int)(currB), 255));
 
 			/*std::cout << "Pixel (" << x+1 << ", " << y+1 << ") has colour (" 
 				  << (int)(m_Image.getPixel(x, y).r) << ", "
@@ -28,6 +29,7 @@ void ImageSaver::LoadData(ImageFrame frame)
 				  << (int)(m_Image.getPixel(x, y).b) << ", "
 				  << (int)(m_Image.getPixel(x, y).a) << ")"
 				  << std::endl;*/
+			realX++;
 		}
 	}
 }

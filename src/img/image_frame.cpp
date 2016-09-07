@@ -29,17 +29,21 @@ uint8_t* ImageFrame::GetBuffer()
 {
 	uint8_t* ret = new uint8_t[4 * this->GetHeight() * this->GetWidth()];
 
-	for(unsigned short y = 0; y < this->GetHeight(); y++)
+	for(unsigned long y = 0; y < this->GetHeight(); y++)
 	{
-		for(unsigned short x = 0; x < this->GetWidth(); x += 1)
+		unsigned long realX = 0;
+		for(unsigned long x = y * 4 * this->GetWidth(); x < (y + 1) * this->GetWidth() * 4; x += 4)
 		{
-			uint8_t r = m_Data[y][x][0], g = m_Data[y][x][1], b = m_Data[y][x][2];
+			uint8_t r = m_Data[y][realX][0], g = m_Data[y][realX][1], b = m_Data[y][realX][2];
 			//unsigned long hex = (r << 16) | (g << 8) | b;
-			ret[(x * 4) + (this->GetWidth() * y)] = r;
-			ret[(x * 4) + (this->GetWidth() * y) + 1] = g;
-			ret[(x * 4) + (this->GetWidth() * y) + 2] = b;
-			ret[(x * 4) + (this->GetWidth() * y) + 3] = 0;
+			ret[x] = r;
+			ret[x + 1] = g;
+			ret[x + 2] = b;
+			ret[x + 3] = 0;
+			std::cout << "Current pixel starts at " << x << " in the buffer" << std::endl;
+			realX++;
 		}
+		std::cout << "LINE FINISHED" << std::endl;
 	}
 
 	/*sf::Image tImg;
