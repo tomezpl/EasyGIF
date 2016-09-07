@@ -40,10 +40,10 @@ uint8_t* ImageFrame::GetBuffer()
 			ret[x + 1] = g;
 			ret[x + 2] = b;
 			ret[x + 3] = 0;
-			std::cout << "Current pixel starts at " << x << " in the buffer" << std::endl;
+			//std::cout << "Current pixel starts at " << x << " in the buffer" << std::endl;
 			realX++;
 		}
-		std::cout << "LINE FINISHED" << std::endl;
+		//std::cout << "LINE FINISHED" << std::endl;
 	}
 
 	/*sf::Image tImg;
