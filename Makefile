@@ -52,6 +52,11 @@ image_frame.o: src/img/image_frame.cpp
 gif_enc.o: src/gifenc/gif.cpp
 	$(CC) -c -o./build/obj/gif_enc.o ./src/gifenc/gif.cpp
 
+test_b64: b64.o src/test/test_b64.cpp
+	$(CC) -o./build/bin/test_b64 ./build/obj/b64.o ./src/test/test_b64.cpp
+b64.o: src/sec/b64.cpp
+	$(CC) -c -o./build/obj/b64.o ./src/sec/b64.cpp
+
 test_upload: md5.o gyazo.o src/test_upload.cpp
 	$(CC) -o./build/bin/test_upload ./build/obj/md5.o ./build/obj/gyazo.o ./src/test_upload.cpp $(CRYP_LIB) $(CURL_LIB)
 md5.o: src/sec/md5.cpp
