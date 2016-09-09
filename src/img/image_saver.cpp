@@ -1,3 +1,6 @@
+// image_saver.cpp
+// Author: Tomasz Zajac
+
 #include "image_saver.hpp"
 
 using namespace EasyGIF;

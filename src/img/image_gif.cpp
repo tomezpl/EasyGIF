@@ -1,3 +1,6 @@
+// image_gif.cpp
+// Author: Tomasz Zajac
+
 #include "image_gif.hpp"
 #include <iostream>
 
@@ -5,24 +8,28 @@ using namespace EasyGIF;
 
 ImageGIF::ImageGIF()
 {
-	//m_Writer = new GifWriter();
+
 }
 
 void ImageGIF::AddFrame(ImageFrame frame)
 {
-	m_Frames.push_back(frame);
+	m_Frames.push_back(frame); // Add a new ImageFrame at the end of the vector
 }
 
 void ImageGIF::RemoveFrames()
 {
-	m_Frames.clear();
+	m_Frames.clear(); // Clear the vector
 }
 
 bool ImageGIF::SaveFile(const char* filename)
 {
 	std::cout << "Beginning to write a GIF..." << std::endl;
+
+	// Initialise the GifWriter struct
+	// Usually, all animations will have the same width and height as the first frame, so that's what's being passed.
+	// The delay should be up to the user (TODO)
 	if(!GifBegin(&m_Writer, filename, m_Frames[0].GetWidth(), m_Frames[0].GetHeight(), 10))
-		return false;
+		return false; // Return false if there is an error
 
 	std::cout << "Starting writing frames" << std::endl;
 	for(unsigned long i = 0; i < m_Frames.size(); i++)
@@ -41,6 +48,6 @@ bool ImageGIF::SaveFile(const char* filename)
 
 ImageGIF::~ImageGIF()
 {
-	//delete m_Writer;
+
 }
 

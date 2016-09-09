@@ -1,3 +1,7 @@
+// image_grabber.hpp
+// Author: Tomasz Zajac
+// The ImageGrabber class allows to take a "screenshot" from an X display.
+
 #ifndef EZGIF_IMAGE_GRABBER
 #define EZGIF_IMAGE_GRABBER
 
@@ -14,22 +18,25 @@
 namespace EasyGIF {
 	class ImageGrabber {
 	private:
-		//Display* m_XDisplay;
-		xcb_connection_t* m_XConnection;
-		xcb_screen_t* m_XScreen;
+		xcb_connection_t* m_XConnection; // Connection to X display
+		xcb_screen_t* m_XScreen; // Screen from X display to grab root window from
 		xcb_screen_iterator_t m_XScreenIter;
-		xcb_window_t m_XWindow;
-		//Window m_XWindow;
-		const xcb_setup_t* m_XSetup;
-		int m_XScreenNumber;
-		//uint8_t* m_ImageData;
-		//XImage* m_Img;
-		xcb_image_t* m_Img;
-		//size_t m_ImageDataLength;
-		//xcb_screen_t* screen_of_display (//xcb_connection_t *c, int screen);
+		xcb_window_t m_XWindow; // Window from X screen to grab image from
+		const xcb_setup_t* m_XSetup; // X display setup
+		int m_XScreenNumber; // X screen number, if necessary
+		xcb_image_t* m_Img; // Current XImage
 	public:
+		// Default constructor
+		// A null pointer will work in most cases where there is only one X display (not to be confused with X screen)
 		ImageGrabber(char* display = nullptr);
+
+		// Takes a screenshot and returns pixels from it
+		// The vector contains another vector inside it for each line/row
+		// Inside each line, pixels are stored as arrays of 4 elements (RGBA channels)
 		std::vector<std::vector<uint8_t*>> Grab();
+
+		// Destructor
+		// Deallocates memory, disconnects from the X server
 		~ImageGrabber();
 	};
 }
