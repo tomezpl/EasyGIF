@@ -25,7 +25,7 @@ clean: rmdirs
 
 all: mkdirs all_targets
 
-test_build: mkdirs 
+test_build: mkdirs
 	$(CC) -o./build/bin/test_build ./src/test_build.cpp \
 	$(XCB_DEV) $(XCB_LIB) \
 	$(SFML_DEV) $(SFML_LIB) \
@@ -56,6 +56,9 @@ test_b64: b64.o src/test/test_b64.cpp
 	$(CC) -o./build/bin/test_b64 ./build/obj/b64.o ./src/test/test_b64.cpp
 b64.o: src/sec/b64.cpp
 	$(CC) -c -o./build/obj/b64.o ./src/sec/b64.cpp
+
+test_imgur:
+	$(CC) -o./build/bin/test_imgur ./src/test/upload_imgur.cpp $(CURL_DEV) $(CURL_LIB)
 
 test_upload: md5.o gyazo.o src/test_upload.cpp
 	$(CC) -o./build/bin/test_upload ./build/obj/md5.o ./build/obj/gyazo.o ./src/test_upload.cpp $(CRYP_LIB) $(CURL_LIB)
