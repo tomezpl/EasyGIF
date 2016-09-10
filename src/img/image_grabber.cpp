@@ -89,5 +89,6 @@ std::vector<std::vector<uint8_t*>> ImageGrabber::Grab()
 
 ImageGrabber::~ImageGrabber()
 {
-
+	xcb_disconnect(m_XConnection);
+	delete m_Img;
 }
