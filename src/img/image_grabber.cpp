@@ -69,12 +69,14 @@ std::vector<std::vector<uint8_t*>> ImageGrabber::Grab()
 			convertedPixel[0] = (currentPixel & 0x00ff0000) >> 16;
 			convertedPixel[3] = (currentPixel & 0xff000000) >> 24;
 
-			/*std::cout << "Pixel (" << x+1 << ", " << y+1 << ") has colour (" 
+			#ifdef EZGIF_DEBUG
+			std::cout << "Pixel (" << x+1 << ", " << y+1 << ") has colour (" 
 				  << (int)convertedPixel[0] << ", "
 				  << (int)convertedPixel[1] << ", "
 				  << (int)convertedPixel[2] << ", "
 				  << (int)convertedPixel[3] << ")"
-				  << std::endl;*/
+				  << std::endl;
+			#endif
 
 			currentLine.push_back(convertedPixel); // add pixel to the current line
 		}

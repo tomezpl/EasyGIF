@@ -21,9 +21,16 @@ SFML_LIB=`pkg-config --libs sfml-all`
 XCB_DEV=`pkg-config --cflags xcb xcb-image xcb-util`
 XCB_LIB=`pkg-config --libs xcb xcb-image xcb-util`
 
+# BUILD FLAGS
+## DEBUG FLAG
+DEBUG_FLAG = -D EZGIF_DEBUG
+
 clean: rmdirs
 
 all: mkdirs all_targets
+
+debug:
+	$(eval CC += $(DEBUG_FLAG))
 
 test_build: mkdirs
 	$(CC) -o./build/bin/test_build ./src/test_build.cpp \
