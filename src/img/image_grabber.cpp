@@ -77,7 +77,6 @@ std::vector<std::vector<uint8_t*>> ImageGrabber::Grab()
 				  << std::endl;*/
 
 			currentLine.push_back(convertedPixel); // add pixel to the current line
-			//delete[] convertedPixel;
 		}
 
 		ret.push_back(currentLine); // add current line to the final return value
