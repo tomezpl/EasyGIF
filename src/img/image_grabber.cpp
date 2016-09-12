@@ -34,29 +34,31 @@ ImageGrabber::ImageGrabber(char* display)
 	}
 }
 
-std::vector<std::vector<uint8_t*>> ImageGrabber::Grab()
+xcb_image_t* ImageGrabber::getImage(xcb_window_t* window, unsigned short left, unsigned short top, unsigned short width, unsigned short height)
 {
-	// Get an image from the root window using the open X display connection
-	m_Img = xcb_image_get(m_XConnection, m_XWindow, 0, 0, 1920, 1080, ~0, XCB_IMAGE_FORMAT_Z_PIXMAP);
+	xcb_image_t* retImg = xcb_image_get(m_XConnection, *window, 0, 0, 1920, 1080, ~0, XCB_IMAGE_FORMAT_Z_PIXMAP);
 
-	// Vector to be returned
+	return retImg;
+}
+
+std::vector<std::vector<uint8_t*>> ImageGrabber::getPixels(xcb_image_t* image)
+{
 	std::vector<std::vector<uint8_t*>> ret;
-
 	// Check if the image is null, and return an empty vector if so.
-	if(!m_Img)
+	if(!image)
 	{
 		std::cout << "Failed to grab image" << std::endl;
 		return ret;
 	}
 
 	// Iterate through the image and get each pixel
-	for(unsigned short y = 0; y < m_Img->height; y++)
+	for(unsigned short y = 0; y < image->height; y++)
 	{
 		std::vector<uint8_t*> currentLine;
 
-		for(unsigned short x = 0; x < m_Img->width; x++)
+		for(unsigned short x = 0; x < image->width; x++)
 		{
-			unsigned long currentPixel = xcb_image_get_pixel(m_Img, x, y);
+			unsigned long currentPixel = xcb_image_get_pixel(image, x, y);
 			uint8_t* convertedPixel = new uint8_t[4]; // This will store values for each of R, G, B and A channels
 
 			// Extracting bits for each channel:
@@ -84,6 +86,15 @@ std::vector<std::vector<uint8_t*>> ImageGrabber::Grab()
 		ret.push_back(currentLine); // add current line to the final return value
 	}
 
+	return ret;
+}
+
+std::vector<std::vector<uint8_t*>> ImageGrabber::Grab()
+{
+	// Get an image from the root window using the open X display connection
+	m_Img = getImage(&m_XWindow, 0, 0, 1920, 1080);
+	// Vector to be returned
+	std::vector<std::vector<uint8_t*>> ret = getPixels(m_Img);
 
 	return ret;
 }
