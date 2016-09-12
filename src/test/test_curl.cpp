@@ -35,7 +35,7 @@ void attempt2(){
 		char idbuffer[]="afbc8928213ceeafeb1a9a0ebfb1aec5";
 		long idlength=strlen(idbuffer);
 		curl_formadd(&post,&last,CURLFORM_COPYNAME,"id",CURLFORM_PTRCONTENTS,idbuffer,CURLFORM_END);
-		curl_formadd(&post,&last,CURLFORM_COPYNAME,"imagedata",CURLFORM_FILE,"idfk.gif",CURLFORM_CONTENTTYPE,"image/\*",CURLFORM_FILENAME,"testfilename",CURLFORM_END);
+		curl_formadd(&post,&last,CURLFORM_COPYNAME,"imagedata",CURLFORM_FILE,"idfk.gif",CURLFORM_CONTENTTYPE,"image/*",CURLFORM_FILENAME,"testfilename",CURLFORM_END);
 		//Perform
 		curl_easy_setopt(curl,CURLOPT_HTTPPOST,post);
 		res=curl_easy_perform(curl);
@@ -59,7 +59,7 @@ int main(int argc,char *argv[]){
 	if(curl){
 		struct curl_httppost* post=NULL;
 		struct curl_httppost* last=NULL;
-	
+
 		char namebuffer[] = "name buffer";
 		long namelength = strlen(namebuffer);
 		char buffer[] = "test buffer";
@@ -103,7 +103,7 @@ int main(int argc,char *argv[]){
 		forms[1].option = CURLFORM_FILE;
 		forms[1].value  = file2;
 		forms[2].option  = CURLFORM_END;
-		
+
 		/*
 		curl_formadd(&post, &last,
 				  CURLFORM_COPYNAME, "name",

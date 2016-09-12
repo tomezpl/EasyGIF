@@ -2,7 +2,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <iterator>
-#include "../json.hpp"
+#include "sec/json.hpp"
 #include <fstream>
 #include <sstream>
 #include <string>
@@ -114,7 +114,7 @@ int main(){
           struct curl_httppost* post=NULL;
           struct curl_httppost* last=NULL;
           curl_formadd(&post,&last,CURLFORM_COPYNAME,"new_album_id",CURLFORM_PTRCONTENTS,album_id.c_str(),CURLFORM_END);
-          curl_formadd(&post,&last,CURLFORM_COPYNAME,"Filedata",CURLFORM_FILE,"/home/toor/Downloads/shiet/shiet.gif",CURLFORM_CONTENTTYPE,"image/gif",CURLFORM_END);
+          curl_formadd(&post,&last,CURLFORM_COPYNAME,"Filedata",CURLFORM_FILE,"/home/toor/Downloads/shiet/shiet.gif",CURLFORM_CONTENTTYPE,"image/*",CURLFORM_END);
           curl_easy_setopt(curl2,CURLOPT_HTTPPOST,post);
           res2=curl_easy_perform(curl2);
           cout<<res2<<endl;
