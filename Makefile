@@ -59,6 +59,12 @@ image_frame.o: src/img/image_frame.cpp
 gif_enc.o: src/gifenc/gif.cpp
 	$(CC) -c -o./build/obj/gif_enc.o ./src/gifenc/gif.cpp
 
+virtual_desktop.o: src/ui/virtual_desktop.cpp
+	$(CC) -c -o./build/obj/virtual_desktop.o ./src/ui/virtual_desktop.cpp $(XCB_DEV)
+
+test_vdesktop: image_grabber.o virtual_desktop.o src/test_vdesktop.cpp
+	$(CC) ./build/obj/image_grabber.o ./build/obj/virtual_desktop.o ./src/test_vdesktop.cpp -o./build/bin/test_vdesktop $(XCB_LIB)
+
 test_b64: b64.o src/test/test_b64.cpp
 	$(CC) -o./build/bin/test_b64 ./build/obj/b64.o ./src/test/test_b64.cpp
 b64.o: src/sec/b64.cpp
