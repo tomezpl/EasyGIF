@@ -8,12 +8,28 @@ using namespace EasyGIF;
 
 ImageGrabber::ImageGrabber(char* display)
 {
+	char* displayStr = "";
+	if(display == nullptr)
+		displayStr = ":0";
+	else
+		displayStr = display;
+	#ifdef EZGIF_DEBUG
+	std::cout << "Initialising an ImageGrabber on X Display \"" << displayStr << "\"" << std::endl;
+	#endif
+
+	m_ScreenWidth = 0;
+	m_ScreenHeight = 0;
+
 	m_XConnection = xcb_connect(display, &m_XScreenNumber); // Connect to an X display
 	m_XSetup = xcb_get_setup(m_XConnection); // Get setup from the X display
 	m_XScreen = nullptr; // I don't know why I'm doing this, but I prefer to initialise it like this.
 	m_XScreenIter = xcb_setup_roots_iterator(m_XSetup);
 	m_XScreen = m_XScreenIter.data; // Get screen from the X display based on the iterator
 					// TODO: add support for multi-monitor setups
+
+	// Get screen resolution
+	m_ScreenWidth = m_XScreen->width_in_pixels;
+	m_ScreenHeight = m_XScreen->height_in_pixels;
 
 	m_Img = nullptr; // Initialise the image
 
@@ -36,7 +52,7 @@ ImageGrabber::ImageGrabber(char* display)
 
 xcb_image_t* ImageGrabber::getImage(xcb_window_t* window, unsigned short left, unsigned short top, unsigned short width, unsigned short height)
 {
-	xcb_image_t* retImg = xcb_image_get(m_XConnection, *window, 0, 0, 1920, 1080, ~0, XCB_IMAGE_FORMAT_Z_PIXMAP);
+	xcb_image_t* retImg = xcb_image_get(m_XConnection, *window, left, top, width, height, ~0, XCB_IMAGE_FORMAT_Z_PIXMAP);
 
 	return retImg;
 }
@@ -92,7 +108,7 @@ std::vector<std::vector<uint8_t*>> ImageGrabber::getPixels(xcb_image_t* image)
 std::vector<std::vector<uint8_t*>> ImageGrabber::Grab()
 {
 	// Get an image from the root window using the open X display connection
-	m_Img = getImage(&m_XWindow, 0, 0, 1920, 1080);
+	m_Img = getImage(&m_XWindow, 0, 0, m_ScreenWidth, m_ScreenHeight);
 	// Vector to be returned
 	std::vector<std::vector<uint8_t*>> ret = getPixels(m_Img);
 

@@ -25,6 +25,7 @@ namespace EasyGIF {
 		xcb_window_t m_XWindow; // Window from X screen to grab image from
 		const xcb_setup_t* m_XSetup; // X display setup
 		int m_XScreenNumber; // X screen number, if necessary
+		unsigned short m_ScreenWidth, m_ScreenHeight;
 		xcb_image_t* m_Img; // Current XImage
 		xcb_image_t* getImage(xcb_window_t* window, unsigned short left, unsigned short top, unsigned short width, unsigned short height); // gets an image from the specified window
 		std::vector<std::vector<uint8_t*>> getPixels(xcb_image_t* image);
