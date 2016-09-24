@@ -74,14 +74,11 @@ image_frame.o: src/img/image_frame.cpp
 gif_enc.o: src/gifenc/gif.cpp
 	$(CC) -c -o./build/obj/gif_enc.o ./src/gifenc/gif.cpp
 
-<<<<<<< HEAD
 xhelper.o: src/util/xhelper.cpp
 	$(CC) -c -o./build/obj/xhelper.o ./src/util/xhelper.cpp $(XCB_DEV)
 
 converter.o: src/util/converter.cpp
 	$(CC) -c -o./build/obj/converter.o ./src/util/converter.cpp $(SFML_DEV)
-=======
->>>>>>> 61e2dcd9308c865d94a35eeb3f395715c3336066
 
 virtual_desktop.o: src/ui/virtual_desktop.cpp
 	$(CC) -c -o./build/obj/virtual_desktop.o ./src/ui/virtual_desktop.cpp $(XCB_DEV)
