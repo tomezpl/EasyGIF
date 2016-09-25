@@ -7,7 +7,9 @@ using namespace EasyGIF::UI;
 
 RegionPicker::RegionPicker(bool activate)
 {
+	m_IsConfirmed = false;
 	m_IsPicking = false;
+	m_IsRunning = false;
 	m_Region = {0, 0, 0, 0};
 	m_XInverted = false;
 	m_YInverted = false;
@@ -35,6 +37,16 @@ void RegionPicker::Activate()
 	#endif
 	m_Window.create(sf::VideoMode(m_WinWidth, m_WinHeight), "EasyGIF RegionPicker", sf::Style::Fullscreen);
 	m_IsRunning = true;
+}
+
+::EasyGIF::Utility::Rectangle RegionPicker::GetRect()
+{
+	return m_Region;
+}
+
+bool RegionPicker::IsConfirmed()
+{
+	return m_IsConfirmed;
 }
 
 bool RegionPicker::IsRunning()
@@ -89,6 +101,11 @@ void RegionPicker::UpdateEvents()
 				m_Window.close();
 				m_IsRunning = false;
 			}
+			if(event.type == sf::Event::KeyPressed)
+			{
+				if(event.key.code == sf::Keyboard::Return)
+					m_IsConfirmed = true;
+			}
 		}
 	}
 }
@@ -137,4 +154,10 @@ void RegionPicker::Draw()
 			m_Window.draw(selection);
 		m_Window.display();
 	}
+}
+
+void RegionPicker::Shutdown()
+{
+	m_IsRunning = false;
+	m_Window.close();
 }

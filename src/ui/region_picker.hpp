@@ -30,6 +30,7 @@ namespace EasyGIF {
 			::EasyGIF::Utility::Converter m_Converter; // utility converter class
 			bool m_IsRunning; // is the region picker running?
 			bool m_XInverted, m_YInverted; // is the selection "inverted"?
+			bool m_IsConfirmed; // did the user confirm the region?
 		public:
 			// Default constructor
 			// Also activates/initialises/launches (you name it) the region picker
@@ -38,6 +39,12 @@ namespace EasyGIF {
 
 			// Creates and initialises the UI, launches the region picker
 			void Activate();
+
+			// Returns the region rectangle
+			::EasyGIF::Utility::Rectangle GetRect();
+
+			// Returns whether the region picker has finished or not
+			bool IsConfirmed();
 
 			// Returns whether the region picker is running or not
 			bool IsRunning();
@@ -50,6 +57,9 @@ namespace EasyGIF {
 
 			// Draw the UI
 			void Draw();
+
+			// Shutdown the RegionPicker
+			void Shutdown();
 		};
 	}
 }
