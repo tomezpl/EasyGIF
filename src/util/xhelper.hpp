@@ -19,6 +19,16 @@ namespace EasyGIF {
 			short width, height;
 		};
 
+		static const Rectangle EmptyRect = {0, 0, 0, 0};
+
+		static bool operator==(const Rectangle& lR, const Rectangle& rR)
+		{
+			if(lR.x == rR.x && lR.y == rR.y && lR.width == rR.width && lR.height == rR.height)
+				return true;
+			else
+				return false;
+		}
+
 		class XHelper {
 		private:
 			xcb_connection_t** m_XConn; // connection to X display
