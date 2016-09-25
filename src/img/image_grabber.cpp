@@ -105,10 +105,12 @@ std::vector<std::vector<uint8_t*>> ImageGrabber::getPixels(xcb_image_t* image)
 	return ret;
 }
 
-std::vector<std::vector<uint8_t*>> ImageGrabber::Grab()
+std::vector<std::vector<uint8_t*>> ImageGrabber::Grab(::EasyGIF::Utility::Rectangle rect)
 {
+	if((const ::EasyGIF::Utility::Rectangle)rect == ::EasyGIF::Utility::EmptyRect)
+		rect = {0, 0, m_ScreenWidth, m_ScreenHeight};
 	// Get an image from the root window using the open X display connection
-	m_Img = getImage(&m_XWindow, 0, 0, m_ScreenWidth, m_ScreenHeight);
+	m_Img = getImage(&m_XWindow, 0, 0, rect.width, rect.height);
 	// Vector to be returned
 	std::vector<std::vector<uint8_t*>> ret = getPixels(m_Img);
 

@@ -5,8 +5,6 @@
 #ifndef EZGIF_IMAGE_GRABBER
 #define EZGIF_IMAGE_GRABBER
 
-#include <X11/Xlib.h>
-#include <X11/Xutil.h>
 #include <xcb/xcb.h>
 #include <xcb/xproto.h>
 #include <xcb/xcb_atom.h>
@@ -15,6 +13,7 @@
 #include <cstdint>
 #include <vector>
 #include <cmath>
+#include "../util/xhelper.hpp"
 
 namespace EasyGIF {
 	class ImageGrabber {
@@ -37,7 +36,7 @@ namespace EasyGIF {
 		// Takes a screenshot and returns pixels from it
 		// The vector contains another vector inside it for each line/row
 		// Inside each line, pixels are stored as arrays of 4 elements (RGBA channels)
-		virtual std::vector<std::vector<uint8_t*>> Grab();
+		virtual std::vector<std::vector<uint8_t*>> Grab(::EasyGIF::Utility::Rectangle rect = ::EasyGIF::Utility::EmptyRect);
 
 		// Destructor
 		// Deallocates memory, disconnects from the X server
