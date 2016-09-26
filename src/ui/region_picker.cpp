@@ -58,7 +58,7 @@ void RegionPicker::ProcessInput()
 {
 	bool isPicking = sf::Mouse::isButtonPressed(sf::Mouse::Left);
 
-	sf::Vector2i mousePos = sf::Mouse::getPosition();
+	sf::Vector2i mousePos = sf::Mouse::getPosition(m_Window);
 
 	if(isPicking)
 	{
