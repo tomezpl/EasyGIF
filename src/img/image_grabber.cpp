@@ -110,7 +110,7 @@ std::vector<std::vector<uint8_t*>> ImageGrabber::Grab(::EasyGIF::Utility::Rectan
 	if((const ::EasyGIF::Utility::Rectangle)rect == ::EasyGIF::Utility::EmptyRect)
 		rect = {0, 0, m_ScreenWidth, m_ScreenHeight};
 	// Get an image from the root window using the open X display connection
-	m_Img = getImage(&m_XWindow, 0, 0, rect.width, rect.height);
+	m_Img = getImage(&m_XWindow, rect.x, rect.y, rect.width, rect.height);
 	// Vector to be returned
 	std::vector<std::vector<uint8_t*>> ret = getPixels(m_Img);
 
