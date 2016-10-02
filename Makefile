@@ -45,16 +45,16 @@ debug:
 	$(eval CC += $(DEBUG_FLAG))
 
 test_build: mkdirs
-	$(CC) -o./build/bin/test_build ./src/test_build.cpp \
+	$(CC) -o./build/bin/test_build ./src/test/test_build.cpp \
 	$(XCB_DEV) $(XCB_LIB) \
 	$(SFML_DEV) $(SFML_LIB) \
 	$(CURL_DEV) $(CURL_LIB)
 
-test_save: converter.o xhelper.o image_container.o image_frame.o image_grabber.o image_saver.o src/test_save.cpp
-	$(CC) -o./build/bin/test_save $(UT_OBJ) $(IMG_OBJ) ./src/test_save.cpp $(XCB_LIB) $(SFML_LIB)
+test_save: converter.o xhelper.o image_container.o image_frame.o image_grabber.o image_saver.o src/test/test_save.cpp
+	$(CC) -o./build/bin/test_save $(UT_OBJ) $(IMG_OBJ) ./src/test/test_save.cpp $(XCB_LIB) $(SFML_LIB)
 
-test_gif: gif_enc.o image_frame.o image_gif.o image_grabber.o src/test_gif.cpp
-	$(CC) -o./build/bin/test_gif ./build/obj/gif_enc.o ./build/obj/image_frame.o ./build/obj/image_gif.o ./build/obj/image_grabber.o ./src/test_gif.cpp $(XCB_LIB) $(SFML_LIB)
+test_gif: gif_enc.o image_frame.o image_gif.o image_grabber.o src/test/test_gif.cpp
+	$(CC) -o./build/bin/test_gif ./build/obj/gif_enc.o ./build/obj/image_frame.o ./build/obj/image_gif.o ./build/obj/image_grabber.o ./src/test/test_gif.cpp $(XCB_LIB) $(SFML_LIB)
 
 image_saver.o: src/img/image_saver.cpp
 	$(CC) -c -o./build/obj/image_saver.o ./src/img/image_saver.cpp $(SFML_DEV)
@@ -86,11 +86,11 @@ virtual_desktop.o: src/ui/virtual_desktop.cpp
 region_picker.o: src/ui/region_picker.cpp
 	$(CC) -c -o./build/obj/region_picker.o ./src/ui/region_picker.cpp $(XCB_DEV) $(SFML_DEV)
 
-test_vdesktop: converter.o image_container.o image_frame.o image_grabber.o image_saver.o xhelper.o virtual_desktop.o src/test_vdesktop.cpp
-	$(CC) $(UT_OBJ) ./build/obj/image_container.o ./build/obj/image_frame.o ./build/obj/image_grabber.o ./build/obj/image_saver.o ./build/obj/virtual_desktop.o ./src/test_vdesktop.cpp -o./build/bin/test_vdesktop $(XCB_LIB) $(SFML_LIB)
+test_vdesktop: converter.o image_container.o image_frame.o image_grabber.o image_saver.o xhelper.o virtual_desktop.o src/test/test_vdesktop.cpp
+	$(CC) $(UT_OBJ) ./build/obj/image_container.o ./build/obj/image_frame.o ./build/obj/image_grabber.o ./build/obj/image_saver.o ./build/obj/virtual_desktop.o ./src/test/test_vdesktop.cpp -o./build/bin/test_vdesktop $(XCB_LIB) $(SFML_LIB)
 
-test_picker: converter.o image_container.o image_frame.o image_grabber.o image_saver.o xhelper.o region_picker.o src/test_picker.cpp
-	$(CC) $(UT_OBJ) ./build/obj/image_container.o ./build/obj/image_frame.o ./build/obj/image_grabber.o ./build/obj/image_saver.o ./build/obj/region_picker.o ./src/test_picker.cpp -o./build/bin/test_picker $(XCB_LIB) $(SFML_LIB)
+test_picker: converter.o image_container.o image_frame.o image_grabber.o image_saver.o xhelper.o region_picker.o src/test/test_picker.cpp
+	$(CC) $(UT_OBJ) ./build/obj/image_container.o ./build/obj/image_frame.o ./build/obj/image_grabber.o ./build/obj/image_saver.o ./build/obj/region_picker.o ./src/test/test_picker.cpp -o./build/bin/test_picker $(XCB_LIB) $(SFML_LIB)
 
 #NETWORKING AND SECURITY TEST BUILDS
 

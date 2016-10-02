@@ -1,7 +1,7 @@
-#include "img/image_frame.hpp"
-#include "img/image_grabber.hpp"
-#include "img/image_saver.hpp"
-#include "ui/region_picker.hpp"
+#include "../img/image_frame.hpp"
+#include "../img/image_grabber.hpp"
+#include "../img/image_saver.hpp"
+#include "../ui/region_picker.hpp"
 #include <unistd.h>
 
 int main()

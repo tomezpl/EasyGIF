@@ -1,6 +1,6 @@
-#include "img/image_frame.hpp"
-#include "img/image_gif.hpp"
-#include "img/image_grabber.hpp"
+#include "../img/image_frame.hpp"
+#include "../img/image_gif.hpp"
+#include "../img/image_grabber.hpp"
 #include <iostream>
 
 int main()
