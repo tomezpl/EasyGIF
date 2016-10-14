@@ -32,6 +32,9 @@ OBJ_DIR=./build/obj/
 ## BINARY FILE DIRECTORY
 BIN_DIR=./build/bin/
 
+#Test DIRECTORY
+TEST_DIR=./src/test
+
 ## OBJECT FILE PATHS
 ### UTILITY OBJECTS
 UT_OBJ=$(OBJ_DIR)/converter.o $(OBJ_DIR)/xhelper.o
@@ -122,6 +125,13 @@ test_conn: conncheck.o b64.o md5.o image_upload.o src/test/test_conn.cpp
 test_uploaders: stringmod.o filestuff.o create_header.o conncheck.o b64.o image_upload.o md5.o gyazo.o
 	$(CC) -o$(BIN_DIR)/test_uploaders $(OBJ_DIR)/stringmod.o ./build/obj/filestuff.o ./build/obj/create_header.o ./build/obj/conncheck.o ./build/obj/b64.o ./build/obj/image_upload.o ./build/obj/md5.o ./build/obj/gyazo.o ./src/test/test_uploaders.cpp $(CURL_LIB) $(CRYP_LIB)
 
+test_headers: stringmod.o create_header.o
+	$(CC) -o$(BIN_DIR)/test_headers $(OBJ_DIR)/stringmod.o $(OBJ_DIR)/create_header.o $(TEST_DIR)/test_headers.cpp $(CURL_LIB)
+
+#IMAGE UPLOADER TESTING
+test_gyazo: stringmod.o filestuff.o create_header.o conncheck.o b64.o image_upload.o md5.o gyazo.o
+	$(CC) -o$(BIN_DIR)/test_gyazo $(OBJ_DIR)/stringmod.o ./build/obj/filestuff.o ./build/obj/create_header.o ./build/obj/conncheck.o ./build/obj/b64.o ./build/obj/image_upload.o ./build/obj/md5.o ./build/obj/gyazo.o ./src/test/test_gyazo.cpp $(CURL_LIB) $(CRYP_LIB)
+
 stringmod.o: src/sec/stringmod.cpp
 	$(CC) -c -o$(OBJ_DIR)/stringmod.o ./src/sec/stringmod.cpp
 filestuff.o: src/net/filestuff.cpp
@@ -132,12 +142,12 @@ conncheck.o: src/net/conncheck.cpp
 	$(CC) -c -o$(OBJ_DIR)/conncheck.o ./src/net/conncheck.cpp $(CURL_DEV)
 b64.o: src/sec/b64.cpp
 	$(CC) -c -o$(OBJ_DIR)/b64.o ./src/sec/b64.cpp
-image_upload.o: src/net/image_upload.cpp
-	$(CC) -c -o$(OBJ_DIR)/image_upload.o ./src/net/image_upload.cpp $(CURL_DEV)
+image_upload.o: src/net/uploaders/image_upload.cpp
+	$(CC) -c -o$(OBJ_DIR)/image_upload.o ./src/net/uploaders/image_upload.cpp $(CURL_DEV)
 md5.o: src/sec/md5.cpp
 	$(CC) -c -o$(OBJ_DIR)/md5.o ./src/sec/md5.cpp $(CRYP_DEV)
-gyazo.o: src/net/gyazo.cpp
-	$(CC) -c -o$(OBJ_DIR)/gyazo.o ./src/net/gyazo.cpp $(CURL_DEV)
+gyazo.o: src/net/uploaders/gyazo.cpp
+	$(CC) -c -o$(OBJ_DIR)/gyazo.o ./src/net/uploaders/gyazo.cpp $(CURL_DEV)
 
 rmdirs:
 	rm ./build --recursive

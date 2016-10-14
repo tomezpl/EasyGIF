@@ -5,9 +5,9 @@
 #define IMAGE_SPLIT_SETTINGS
 #include <string>
 #include <curl/curl.h>
-#include "../sec/md5.hpp"
-#include "../sec/b64.hpp"
-#include "conncheck.hpp"
+#include "../../sec/md5.hpp"
+#include "../../sec/b64.hpp"
+#include "../conncheck.hpp"
 namespace EasyGIF{
 	namespace Uploaders{
 		namespace Values{
@@ -16,20 +16,11 @@ namespace EasyGIF{
 			static bool DEFAULT_USE_HTTPS=true;
 			static std::string DEFAULT_AGENT="Mozilla/420";
 			static std::string DEFAULT_PROXY="";
-			static int MULTIPART_FILE=0;
-			static int MULTIPART_STRING=1;
-			static int MULTIPART_NAME=2;
-			static int MULTIPART_END=3;
 		};
 		void CURL_init();
 		void CURL_cleanup();
-		//Bool parameters = https
-		bool CanConnectToGyazo(bool);
-		bool CanConnectToGyazo(bool,std::string);
-		bool CanConnectToGyazo();
 		bool CanConnectToImgur(bool);
 		bool CanConectToImgur();
-		bool UploadFileToGyazo(std::string);
 		bool UploadFileToImgur(std::string);
 		struct MultipartData{
 			int type;
@@ -70,16 +61,6 @@ namespace EasyGIF{
 				ImageUploader* SetHostname(std::string);
 				ImageUploader* SetProxySettings(std::string);
 				ImageUploader* SetUserAgent(std::string);
-				/*
-				//File,filename,custom_url,custom_proxy,custom_agent
-				virtual int UploadFile(std::string,std::string,std::string,std::string,std::string)=0;
-				//File,filename,custom_proxy,custom_agent
-				virtual int UploadFile(std::string,std::string,std::string,std::string);
-				//File,filename
-				virtual int UploadFile(std::string,std::string);
-				//File
-				virtual int UploadFile(std::string);
-				*/
 		};
 		struct CurlUploadSettings{
 			std::string upload_url;
@@ -88,14 +69,13 @@ namespace EasyGIF{
 			std::string upload_filename;
 			std::string user_agent;
 			std::string proxy_settings;
-			bool using_https;
 		};
 		namespace Imgur{
 			#ifdef IMAGE_SPLIT_SETTINGS
-			static bool DEFAULT_IMGUR_USE_HTTPS=true;
-			//If these strings are empty, they will use the main default settings
-			static std::string DEFAULT_IMGUR_AGENT="";
-			static std::string DEFAULT_GYAZO_PROXY="";
+				static bool DEFAULT_IMGUR_USE_HTTPS=true;
+				static std::string DEFAULT_IMGUR_PROXY="";
+				//If these strings are empty, they will use the main default settings
+				static std::string DEFAULT_IMGUR_AGENT="";
 			#endif
 		}
 	}

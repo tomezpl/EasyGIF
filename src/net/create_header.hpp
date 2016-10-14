@@ -29,11 +29,13 @@ namespace EasyGIF{
         int IndexOf(std::string head);
         int GetHeaderCount();
 				HeaderCreator* ClearHeaders();
+        int GetHeadersLength();
         std::string GetHeaderString(int index);
+        std::string GetHeadersString();
         std::vector<std::string> GetHeaderStrings();
 				std::vector<HeaderData> GetHeaders();
-				curl_slist* GetHeaderList();
-        void GetHeaderList(curl_slist* list);
+        int CopyHeaderList(curl_slist* list);
+        curl_slist* GetHeaderList();
 		};
   }
 }

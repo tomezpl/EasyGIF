@@ -1,11 +1,8 @@
 #include "image_upload.hpp"
 namespace EasyGIF{
   namespace Uploaders{
-    void CURL_init(){curl_global_init(CURL_GLOBAL_ALL);Values::CURL_INITIALISED=true;}
-		void CURL_cleanup(){curl_global_cleanup();Values::CURL_CLEANEDUP=true;}
-    bool CanConnectToGyazo(bool https){return TestGET(https?"https://gyazo.com":"http://gyazo.com");}
-    bool CanConnectToGyazo(){return CanConnectToGyazo(true);}
-    bool CanConnectToGyazo(bool https,std::string proxy){return TestProxy(https?"https://gyazo.com":"http://gyazo.com",proxy.c_str());}
+    void CURL_init(){if(!Values::CURL_INITIALISED){curl_global_init(CURL_GLOBAL_ALL);Values::CURL_INITIALISED=false;}}
+		void CURL_cleanup(){if(Values::CURL_INITIALISED){curl_global_cleanup();EasyGIF::Uploaders::Values::CURL_CLEANEDUP=true;}}
     ImageUploader::ImageUploader(std::string url,std::string hostname,std::string proxy,std::string useragent,bool supports_gif,bool supports_still){
       this->upload_url=url;
       this->host_name=hostname;

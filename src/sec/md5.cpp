@@ -8,5 +8,6 @@ namespace EasyGIF{
 			return digest;
 		}
 		std::string GetFileMD5(std::string filename){return GetFileMD5(filename.c_str());}
+		std::string GetFileMD5(std::string file_path,bool lowercase){return lowercase?EasyGIF::Mod::toLower(GetFileMD5(file_path.c_str())):GetFileMD5(file_path.c_str());}
 	}
 }
