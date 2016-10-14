@@ -16,6 +16,7 @@ void EzApp::Screenshot::RunUI()
 	{
 		m_Picker->ProcessInput();
 		m_Picker->UpdateEvents();
+		m_Picker->Draw();
 	}
 
 	if(m_Picker->IsConfirmed())
