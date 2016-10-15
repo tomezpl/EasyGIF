@@ -21,9 +21,16 @@ SFML_LIB=`pkg-config --libs sfml-audio sfml-graphics sfml-network sfml-system sf
 XCB_DEV=`pkg-config --cflags xcb xcb-image xcb-util`
 XCB_LIB=`pkg-config --libs xcb xcb-image xcb-util`
 
+## GTK+
+GTK_DEV=`pkg-config --cflags gtk+-3.0 gmodule-2.0`
+GTK_LIB=`pkg-config --libs gtk+-3.0 gmodule-2.0`
+
 # BUILD FLAGS
 ## DEBUG FLAG
 DEBUG_FLAG = -D EZGIF_DEBUG
+
+## INSTALL FLAG
+INSTALL_FLAG = -D EZGIF_APP_INSTALLED
 
 # SHORTCUTS/ALIASES
 ## OBJECT FILE DIRECTORY
@@ -37,7 +44,7 @@ TEST_DIR=./src/test
 
 ## OBJECT FILE PATHS
 ### UTILITY OBJECTS
-UT_OBJ=$(OBJ_DIR)/converter.o $(OBJ_DIR)/xhelper.o
+UT_OBJ=$(OBJ_DIR)/converter.o $(OBJ_DIR)/xhelper.o $(OBJ_DIR)/file_system.o
 
 ### IMAGE OBJECTS
 IMG_OBJ=$(OBJ_DIR)/image_container.o $(OBJ_DIR)/image_frame.o $(OBJ_DIR)/image_grabber.o $(OBJ_DIR)/image_saver.o
@@ -53,13 +60,21 @@ clean: rmdirs
 
 all: mkdirs all_targets
 
+set_install_flag:
+	$(eval CC += $(INSTALL_FLAG))
+
+install: set_install_flag all
+	cp ./build/bin/easygif /usr/bin/
+	mkdir -p /usr/lib/easygif
+	cp ./ui /usr/lib/easygif/ --recursive
+
 debug:
 	$(eval CC += $(DEBUG_FLAG))
 
-all_targets: image_container.o image_frame.o image_gif.o image_grabber.o image_saver.o gif_enc.o region_picker.o screenshot.o xhelper.o converter.o
+all_targets: image_container.o image_frame.o image_gif.o image_grabber.o image_saver.o gif_enc.o region_picker.o screenshot.o xhelper.o converter.o file_system.o
 
 app: all_targets src/app/main.cpp
-	$(CC) -o$(BIN_DIR)/easygif ./src/app/main.cpp $(APP_OBJ) $(IMG_GIF_OBJ) $(UI_OBJ) $(UT_OBJ) $(XCB_LIB) $(SFML_LIB)
+	$(CC) -o$(BIN_DIR)/easygif ./src/app/main.cpp $(APP_OBJ) $(IMG_GIF_OBJ) $(UI_OBJ) $(UT_OBJ) $(XCB_LIB) $(SFML_LIB) $(GTK_DEV) $(GTK_LIB)
 
 test_build: mkdirs
 	$(CC) -o$(BIN_DIR)/test_build ./src/test/test_build.cpp \
@@ -96,6 +111,9 @@ xhelper.o: src/util/xhelper.cpp
 
 converter.o: src/util/converter.cpp
 	$(CC) -c -o$(OBJ_DIR)/converter.o ./src/util/converter.cpp $(SFML_DEV)
+
+file_system.o: src/util/file_system.cpp
+	$(CC) -c -o$(OBJ_DIR)/file_system.o ./src/util/file_system.cpp
 
 virtual_desktop.o: src/ui/virtual_desktop.cpp
 	$(CC) -c -o$(OBJ_DIR)/virtual_desktop.o ./src/ui/virtual_desktop.cpp $(XCB_DEV)
