@@ -63,7 +63,7 @@ all: mkdirs all_targets
 set_install_flag:
 	$(eval CC += $(INSTALL_FLAG))
 
-install: set_install_flag all
+install: set_install_flag mkdirs app
 	cp ./build/bin/easygif /usr/bin/
 	mkdir -p /usr/lib/easygif
 	cp ./ui /usr/lib/easygif/ --recursive
@@ -74,7 +74,7 @@ debug:
 all_targets: image_container.o image_frame.o image_gif.o image_grabber.o image_saver.o gif_enc.o region_picker.o screenshot.o xhelper.o converter.o file_system.o
 
 app: all_targets src/app/main.cpp
-	$(CC) -o$(BIN_DIR)/easygif ./src/app/main.cpp $(APP_OBJ) $(IMG_GIF_OBJ) $(UI_OBJ) $(UT_OBJ) $(XCB_LIB) $(SFML_LIB) $(GTK_DEV) $(GTK_LIB)
+	$(CC) -rdynamic -o$(BIN_DIR)/easygif ./src/app/main.cpp $(APP_OBJ) $(IMG_GIF_OBJ) $(UI_OBJ) $(UT_OBJ) $(XCB_LIB) $(SFML_LIB) $(GTK_DEV) $(GTK_LIB)
 
 test_build: mkdirs
 	$(CC) -o$(BIN_DIR)/test_build ./src/test/test_build.cpp \
