@@ -159,5 +159,10 @@ void RegionPicker::Draw()
 void RegionPicker::Shutdown()
 {
 	m_IsRunning = false;
+
+	m_Window.clear();
+	m_Window.draw(m_Desktop);
+	m_Window.display();
+
 	m_Window.close();
 }
