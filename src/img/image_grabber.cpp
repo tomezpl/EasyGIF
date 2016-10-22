@@ -52,6 +52,9 @@ ImageGrabber::ImageGrabber(char* display)
 
 xcb_image_t* ImageGrabber::getImage(xcb_window_t* window, unsigned short left, unsigned short top, unsigned short width, unsigned short height)
 {
+	xcb_flush(m_XConnection);
+	xcb_aux_sync(m_XConnection);
+
 	xcb_image_t* retImg = xcb_image_get(m_XConnection, *window, left, top, width, height, ~0, XCB_IMAGE_FORMAT_Z_PIXMAP);
 
 	return retImg;
