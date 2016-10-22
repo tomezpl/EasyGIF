@@ -16,6 +16,9 @@
 #include "../util/xhelper.hpp"
 
 namespace EasyGIF {
+	/**
+	 * The ImageGrabber class allows to take a "screenshot" from an X display.
+	 */
 	class ImageGrabber {
 	protected:
 		xcb_connection_t* m_XConnection; // Connection to X display
