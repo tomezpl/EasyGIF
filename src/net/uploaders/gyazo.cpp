@@ -128,6 +128,11 @@ namespace EasyGIF{
 						curl_formadd(&post,&last,CURLFORM_COPYNAME,"imagedata",CURLFORM_FILE,upload_settings.upload_settings.upload_file.c_str(),CURLFORM_CONTENTTYPE,"image/*",CURLFORM_FILENAME,upload_settings.upload_settings.upload_filename.c_str(),CURLFORM_END);
 					}
 					curl_easy_setopt(curl,CURLOPT_HTTPPOST,post);
+
+					// don't request body of the download,
+					// prevents curl from printing to stdout:
+					curl_easy_setopt(curl, CURLOPT_NOBODY, 1); 
+
 					res=curl_easy_perform(curl);
 					uploaded_info->upload_successful=res==CURLE_OK;
 					uploaded_info->curl_response=res;
