@@ -122,8 +122,11 @@ namespace EasyGIF{
 					struct curl_httppost* post=NULL;
 					struct curl_httppost* last=NULL;
 					curl_formadd(&post,&last,CURLFORM_COPYNAME,"id",CURLFORM_COPYCONTENTS,upload_settings.gyazo_id.c_str(),CURLFORM_END);
-					if(upload_settings.upload_settings.upload_filename.empty()){curl_formadd(&post,&last,CURLFORM_COPYNAME,"imagedata",CURLFORM_FILE,upload_settings.upload_settings.upload_file.c_str(),CURLFORM_CONTENTTYPE,"image/*",CURLFORM_END);
-					}else{curl_formadd(&post,&last,CURLFORM_COPYNAME,"imagedata",CURLFORM_FILE,upload_settings.upload_settings.upload_file.c_str(),CURLFORM_CONTENTTYPE,"image/*",CURLFORM_FILENAME,upload_settings.upload_settings.upload_filename,CURLFORM_END);}
+					if(upload_settings.upload_settings.upload_filename.empty()){
+						curl_formadd(&post,&last,CURLFORM_COPYNAME,"imagedata",CURLFORM_FILE,upload_settings.upload_settings.upload_file.c_str(),CURLFORM_CONTENTTYPE,"image/*",CURLFORM_END);
+					}else{
+						curl_formadd(&post,&last,CURLFORM_COPYNAME,"imagedata",CURLFORM_FILE,upload_settings.upload_settings.upload_file.c_str(),CURLFORM_CONTENTTYPE,"image/*",CURLFORM_FILENAME,upload_settings.upload_settings.upload_filename,CURLFORM_END);
+					}
 					curl_easy_setopt(curl,CURLOPT_HTTPPOST,post);
 					res=curl_easy_perform(curl);
 					uploaded_info->upload_successful=res==CURLE_OK;
