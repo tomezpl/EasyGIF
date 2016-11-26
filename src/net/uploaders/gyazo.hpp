@@ -8,6 +8,8 @@
 #include "../create_header.hpp"
 namespace EasyGIF{
 	namespace Uploaders{
+		//Putting this here for now as I can't be arsed to change all the makefile shit
+		std::string GetLastExtension(std::string path);
 		namespace Gyazo{
 			std::string GetUploadURL(bool use_https);
 			std::string GetUploadURL();

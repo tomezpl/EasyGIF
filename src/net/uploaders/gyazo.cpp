@@ -1,7 +1,11 @@
 #include "gyazo.hpp"
-#include <iostream>
 namespace EasyGIF{
 	namespace Uploaders{
+
+		std::string GetLastExtension(std::string path){
+			return path.substr(path.find_last_of(".")); //returns the dot with the extension
+		}
+
 		//void UploadFileToGyazo(Gyazo::GyazoCompletedUpload *ptr,std::string file_path){Gyazo g;g.UploadFile(ptr,file_path);}
 		//void UploadFileToGyazo(Gyazo::GyazoCompletedUpload *ptr,std::string file_path,bool verbose){Gyazo g;g.SetVerbose(verbose);g.UploadFile(ptr,file_path);}
 		bool CanConnectToGyazo(bool https){return TestGET(EasyGIF::Uploaders::Gyazo::GetIndexPage(https));}
@@ -69,7 +73,8 @@ namespace EasyGIF{
 			void SetUploadSettings(GyazoUploadSettings* settings_struct,std::string file_path){
 				settings_struct->upload_settings.upload_url=GetUploadURL();
 				settings_struct->upload_settings.upload_file=file_path;
-				settings_struct->upload_settings.upload_extension="";
+				//settings_struct->upload_settings.upload_extension="";
+				settings_struct->upload_settings.upload_extension=GetLastExtension(file_path);
 				settings_struct->upload_settings.upload_filename="";
 				settings_struct->upload_settings.user_agent=GetDefaultUserAgent();
 				settings_struct->upload_settings.proxy_settings=GetDefaultProxySettings();
