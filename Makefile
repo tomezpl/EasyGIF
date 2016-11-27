@@ -27,7 +27,8 @@ GTK_LIB=`pkg-config --libs gtk+-3.0 gmodule-2.0`
 
 # BUILD FLAGS
 ## DEBUG FLAG
-DEBUG_FLAG = -D EZGIF_DEBUG
+DEBUG_FLAG = -g
+EZDEBUG_FLAG = -D EZGIF_DEBUG
 
 ## INSTALL FLAG
 INSTALL_FLAG = -D EZGIF_APP_INSTALLED
@@ -74,7 +75,7 @@ debug:
 all_targets: image_container.o image_frame.o image_gif.o image_grabber.o image_saver.o gif_enc.o region_picker.o screenshot.o xhelper.o converter.o file_system.o
 
 app: all_targets src/app/main.cpp
-	$(CC) -rdynamic -o$(BIN_DIR)/easygif ./src/app/main.cpp $(APP_OBJ) $(IMG_GIF_OBJ) $(UI_OBJ) $(UT_OBJ) $(XCB_LIB) $(SFML_LIB) $(GTK_DEV) $(GTK_LIB)
+	$(CC) -o$(BIN_DIR)/easygif ./src/app/main.cpp $(APP_OBJ) $(IMG_GIF_OBJ) $(UI_OBJ) $(UT_OBJ) $(XCB_LIB) $(SFML_LIB) $(GTK_DEV) $(GTK_LIB)
 
 test_build: mkdirs
 	$(CC) -o$(BIN_DIR)/test_build ./src/test/test_build.cpp \
