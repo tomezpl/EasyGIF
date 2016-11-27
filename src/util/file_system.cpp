@@ -2,7 +2,7 @@
 
 namespace EasyGIF {
 	namespace FileSystem {
-		const char* GetAssetPath(std::string assetLocalPath)
+		std::string GetAssetPath(std::string assetLocalPath)
 		{
 			std::string finalPath = "";
 
@@ -13,7 +13,7 @@ namespace EasyGIF {
 			finalPath.append("./");
 			finalPath.append(assetLocalPath);
 
-			return finalPath.c_str();
+			return finalPath;
 		}
 	}
 }

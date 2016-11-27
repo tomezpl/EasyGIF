@@ -73,10 +73,10 @@ int main(int argc, char** argv)
 	gtk_init(&argc, &argv);
 
 	g_pBuilder = gtk_builder_new();
-	if(!gtk_builder_add_from_file(g_pBuilder, EasyGIF::FileSystem::GetAssetPath("./ui/ezapp.glade"), &error))
+	if(!gtk_builder_add_from_file(g_pBuilder, EasyGIF::FileSystem::GetAssetPath("./ui/ezapp.glade").c_str(), &error))
 	{
 		g_warning("%s", error->message);
-		g_free(error);
+		//g_free(error);
 		return 1;
 	}
 

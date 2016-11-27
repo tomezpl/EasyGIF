@@ -2,6 +2,7 @@
 #define EZGIF_UTIL_FILESYS
 
 #include <string>
+#include <cstring>
 
 namespace EasyGIF {
 	/**
@@ -14,7 +15,7 @@ namespace EasyGIF {
 		 *
 		 * The program will need to be compiled with **EZGIF_APP_INSTALLED** to be considered installed in this function.
 		*/
-		extern const char* GetAssetPath(std::string assetLocalPath);
+		extern std::string GetAssetPath(std::string assetLocalPath);
 	}
 }
 
