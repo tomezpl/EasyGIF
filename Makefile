@@ -151,6 +151,9 @@ test_headers: stringmod.o create_header.o
 test_gyazo: stringmod.o filestuff.o create_header.o conncheck.o b64.o image_upload.o md5.o gyazo.o
 	$(CC) -o$(BIN_DIR)/test_gyazo $(OBJ_DIR)/stringmod.o ./build/obj/filestuff.o ./build/obj/create_header.o ./build/obj/conncheck.o ./build/obj/b64.o ./build/obj/image_upload.o ./build/obj/md5.o ./build/obj/gyazo.o ./src/test/uploaders/test_gyazo.cpp $(CURL_LIB) $(CRYP_LIB) \
 	&& $(BIN_DIR)/test_gyazo
+test_imgur_api:
+	$(CC) -o$(BIN_DIR)/test_imgur_api ./src/test/imgur_test_api.cpp $(CURL_LIB) \
+	&& $(BIN_DIR)/test_imgur_api
 
 stringmod.o: src/sec/stringmod.cpp
 	$(CC) -c -o$(OBJ_DIR)/stringmod.o ./src/sec/stringmod.cpp

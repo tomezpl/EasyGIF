@@ -1,6 +1,8 @@
 #include "filestuff.hpp"
 namespace EasyGIF{
   namespace IO{
+    //for writing curl body to file
+    static size_t write_data(void *ptr,size_t size,size_t nmemb,void *stream){return fwrite(ptr,size,nmemb,(FILE *)stream);}
     static std::string readTextFile(const char* fp){
       std::ifstream input(fp);
       std::stringstream sstr;
@@ -24,5 +26,12 @@ namespace EasyGIF{
       return cookeez;
     }
     static std::vector<std::string> getCookies(std::string fp){return getCookies(fp.c_str());}
+    //Parse JSON File
+    static void parseJSONData(std::string json_data,*json jason){(*jason)=json::parse(json_data);}
+    static void parseJSONFile(std::string file_path,*json jason){parseJSONFile(file_path.c_str(),jason);}
+    static void parseJSONFile(const char* file_path,*json jason){
+      std::string file_data=readTextFile(file_path);
+      parseJSONData(file_data,jason);
+    }
   }
 }

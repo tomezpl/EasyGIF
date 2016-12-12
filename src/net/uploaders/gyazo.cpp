@@ -1,11 +1,6 @@
 #include "gyazo.hpp"
 namespace EasyGIF{
 	namespace Uploaders{
-
-		std::string GetLastExtension(std::string path){
-			return path.substr(path.find_last_of(".")); //returns the dot with the extension
-		}
-
 		//void UploadFileToGyazo(Gyazo::GyazoCompletedUpload *ptr,std::string file_path){Gyazo g;g.UploadFile(ptr,file_path);}
 		//void UploadFileToGyazo(Gyazo::GyazoCompletedUpload *ptr,std::string file_path,bool verbose){Gyazo g;g.SetVerbose(verbose);g.UploadFile(ptr,file_path);}
 		bool CanConnectToGyazo(bool https){return TestGET(EasyGIF::Uploaders::Gyazo::GetIndexPage(https));}
@@ -32,7 +27,7 @@ namespace EasyGIF{
 			}
 			std::string GetDefaultProxySettings(){
 				#ifdef IMAGE_SPLIT_SETTINGS
-					return Values::DEFAULT_GYAZO_PROXY;
+					return Values::DEFAULT_GYAZO_PROXY.empty()?EasyGIF::Uploaders::Values::DEFAULT_PROXY:Values::DEFAULT_GYAZO_PROXY;
 				#else
 					return EasyGIF::Uploaders::Values::DEFAULT_PROXY;
 				#endif
@@ -131,7 +126,7 @@ namespace EasyGIF{
 
 					// don't request body of the download,
 					// prevents curl from printing to stdout:
-					curl_easy_setopt(curl, CURLOPT_NOBODY, 1); 
+					curl_easy_setopt(curl, CURLOPT_NOBODY, 1);
 
 					res=curl_easy_perform(curl);
 					uploaded_info->upload_successful=res==CURLE_OK;

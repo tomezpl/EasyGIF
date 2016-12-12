@@ -22,7 +22,6 @@ int main(){
   cout<<"Created EasyGIF::Uploaders::Gyazo::GyazoCompletedUpload struct"<<endl;
   //PRINTING URL WITHIN THIS METHOD
   int res2=EasyGIF::Uploaders::UploadFileToGyazo(test_image_file,&res);
-  cout<<" <-RANDOM URL WTF RICHARD"<<endl<<"Upload complete, response code: "<<res2<<endl;
   cout<<"Calculated md5 digest: "<<res.md5_digest<<endl;
   cout<<"Gyazo page url: "<<res.page_url<<endl;
   cout<<"Gyazo image url: "<<res.image_url<<endl;

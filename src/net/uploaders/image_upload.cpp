@@ -1,6 +1,9 @@
 #include "image_upload.hpp"
 namespace EasyGIF{
   namespace Uploaders{
+    std::string GetLastExtension(std::string path){
+			return path.substr(path.find_last_of(".")); //returns the dot with the extension
+		}
     void CURL_init(){if(!Values::CURL_INITIALISED){curl_global_init(CURL_GLOBAL_ALL);Values::CURL_INITIALISED=false;}}
 		void CURL_cleanup(){if(Values::CURL_INITIALISED){curl_global_cleanup();EasyGIF::Uploaders::Values::CURL_CLEANEDUP=true;}}
     ImageUploader::ImageUploader(std::string url,std::string hostname,std::string proxy,std::string useragent,bool supports_gif,bool supports_still){

@@ -8,9 +8,14 @@
 #include "../create_header.hpp"
 namespace EasyGIF{
 	namespace Uploaders{
-		//Putting this here for now as I can't be arsed to change all the makefile shit
-		std::string GetLastExtension(std::string path);
 		namespace Gyazo{
+			#ifdef IMAGE_SPLIT_SETTINGS
+				namespace Values{
+					static bool DEFAULT_GYAZO_USE_HTTPS=true;
+					static std::string DEFAULT_GYAZO_AGENT="";
+					static std::string DEFAULT_GYAZO_PROXY="";
+				}
+			#endif
 			std::string GetUploadURL(bool use_https);
 			std::string GetUploadURL();
 			std::string GetMD5Page(bool use_https,std::string md5_digest);
@@ -58,13 +63,7 @@ namespace EasyGIF{
 			};
 			std::string GetRandomID(int);
 			std::string ParseGID(std::string);
-			#ifdef IMAGE_SPLIT_SETTINGS
-				namespace Values{
-					static bool DEFAULT_GYAZO_USE_HTTPS=true;
-					static std::string DEFAULT_GYAZO_AGENT="";
-					static std::string DEFAULT_GYAZO_PROXY="";
-				}
-			#endif
+
 			//void SetUploadSettings(GyazoUploadSettings* upload_settings,std::string file_path,std::string file_name,std::string extension,)
 		}
 		int UploadFileToGyazo(std::string file,EasyGIF::Uploaders::Gyazo::GyazoCompletedUpload* result);

@@ -2,6 +2,7 @@
 #define IMAGE_UPLOAD_H
 //This allows for ImageUpload settings to be split from main defaults
 //Meaning that each upload service can have its own default settings
+//Defining IMAGE_SPLIT_SETTINGS means that each uploader will have its own individual settings, otherwise all will use the same settings
 #define IMAGE_SPLIT_SETTINGS
 #include <string>
 #include <curl/curl.h>
@@ -11,12 +12,13 @@
 namespace EasyGIF{
 	namespace Uploaders{
 		namespace Values{
-			static bool CURL_INITIALISED=false;
-			static bool CURL_CLEANEDUP=false;
-			static bool DEFAULT_USE_HTTPS=true;
-			static std::string DEFAULT_AGENT="Mozilla/420";
-			static std::string DEFAULT_PROXY="";
+			const bool CURL_INITIALISED=false;
+			const bool CURL_CLEANEDUP=false;
+			const bool DEFAULT_USE_HTTPS=true;
+			const std::string DEFAULT_AGENT="EasyGIF/Base";
+			const std::string DEFAULT_PROXY="";
 		};
+		std::string GetLastExtension(std::string path);
 		void CURL_init();
 		void CURL_cleanup();
 		bool CanConnectToImgur(bool);
@@ -70,14 +72,6 @@ namespace EasyGIF{
 			std::string user_agent;
 			std::string proxy_settings;
 		};
-		namespace Imgur{
-			#ifdef IMAGE_SPLIT_SETTINGS
-				static bool DEFAULT_IMGUR_USE_HTTPS=true;
-				static std::string DEFAULT_IMGUR_PROXY="";
-				//If these strings are empty, they will use the main default settings
-				static std::string DEFAULT_IMGUR_AGENT="";
-			#endif
-		}
 	}
 }
 #endif
