@@ -15,6 +15,10 @@ std::string g_module = "";
 GtkBuilder* g_pBuilder = nullptr;
 GtkWidget* g_pMainWnd = nullptr;
 
+// Can the application start capturing already?
+// (GTK+ doesn't destroy the windows immediately so this will be used to tell whether it's been destroyed or not)
+bool g_ProceedCapture = false;
+
 void TakeScreenshot(std::string filename = "")
 {
 	EasyGIF::App::ScreenshotStatic ss;
@@ -42,16 +46,18 @@ extern "C" {
 	{
 		GtkWidget* pCaptureWnd = gtk_widget_get_toplevel(GTK_WIDGET(widget));
 		gtk_widget_destroy(pCaptureWnd);
-		RecordGIF(g_filename);
 		gtk_main_quit();
+		g_module = "screenshot_gif";
+
 	}
 
 	void ui_btn_capture_ss(GtkButton* widget, gpointer user_data)
 	{
 		GtkWidget* pCaptureWnd = gtk_widget_get_toplevel(GTK_WIDGET(widget));
+		gtk_widget_hide(pCaptureWnd);
 		gtk_widget_destroy(pCaptureWnd);
-		TakeScreenshot(g_filename);
 		gtk_main_quit();
+		g_module = "screenshot_static";
 	}
 
 	void ui_btn_capture(GtkButton* widget, gpointer user_data)
@@ -63,6 +69,11 @@ extern "C" {
 		std::cout << "captureDlgWnd shown" << std::endl;
 		gtk_widget_destroy(g_pMainWnd);
 		std::cout << "mainWnd destroyed" << std::endl;
+	}
+
+	void ui_btn_capture_destroy(GtkButton* widget, gpointer user_data)
+	{
+		g_ProceedCapture = true;
 	}
 }
 
@@ -86,6 +97,7 @@ int main(int argc, char** argv)
 	gtk_builder_add_callback_symbol(g_pBuilder, "ui_btn_capture_gif", G_CALLBACK(ui_btn_capture_gif));
 	gtk_builder_add_callback_symbol(g_pBuilder, "ui_btn_capture_ss", G_CALLBACK(ui_btn_capture_ss));
 
+	
 	g_pMainWnd = GTK_WIDGET(gtk_builder_get_object(g_pBuilder, "mainWnd"));
 
 	// check if user wants to launch a specific module (e.g. screenshot_gif) right away
@@ -105,6 +117,16 @@ int main(int argc, char** argv)
 	{
 		gtk_widget_show(g_pMainWnd);
 		gtk_main();
+
+		// TODO: This will need to be fixed
+		// but it works for now so I'll leave it like this
+		//if(g_ProceedCapture)
+		//{
+			if(g_module == "screenshot_static")
+				TakeScreenshot(g_filename);
+			else if(g_module == "screenshot_gif")
+				RecordGIF(g_filename);
+		//}
 	}
 
 	g_object_unref(G_OBJECT(g_pBuilder));
