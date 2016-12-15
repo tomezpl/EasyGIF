@@ -5,15 +5,15 @@
 #include "../create_header.hpp"
 #include "../../json.hpp"
 #include "../filestuff.hpp"
+#include <string>
 #ifdef IMAGE_SPLIT_SETTINGS
   #define DEFAULT_IMGUR_ANON_USE_HTTPS 1
   #define DEFAULT_IMGUR_ANON_PROXY ""
   #define DEFAULT_IMGUR_ANON_AGENT ""
 #endif
-namepsace EasyGIF{
+namespace EasyGIF{
   namespace Uploaders{
     namespace Imgur{
-      int UploadAnonImage(ImgurUploadSettings upload_settings,ImgurCompletedUpload* completed);
       struct ImgurUploadSettings{
         EasyGIF::Uploaders::CurlUploadSettings upload_settings;
         std::string client_id;
@@ -53,6 +53,7 @@ namepsace EasyGIF{
         int status_code;
         ImgurUploadSettings upload_settings;
       };
+      int UploadAnonImage(ImgurUploadSettings upload_settings,ImgurCompletedUpload* completed);
     }
   }
 }
