@@ -1,3 +1,5 @@
+#ifndef STRINGMOD_H
+#define STRINGMOD_H
 #include <string>
 #include <algorithm>
 namespace EasyGIF{
@@ -7,3 +9,4 @@ namespace EasyGIF{
     std::string rfindExtension(std::string path);
   }
 }
+#endif

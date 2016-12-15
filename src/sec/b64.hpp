@@ -1,3 +1,5 @@
+#ifndef B64_H
+#define B64_H
 #include <string>
 namespace EasyGIF{
 	namespace Conversion{
@@ -14,3 +16,4 @@ namespace EasyGIF{
 		std::string Base64_DecodeString(std::string);
 	}
 }
+#endif
