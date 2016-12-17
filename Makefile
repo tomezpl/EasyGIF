@@ -42,7 +42,7 @@ BIN_DIR=./build/bin
 
 #Test DIRECTORY
 TEST_DIR=./src/test
-
+#src directories
 NET_DIR=./src/net
 UPL_DIR=./src/net/uploaders
 SEC_DIR=./src/sec
@@ -138,40 +138,44 @@ test_picker: converter.o image_container.o image_frame.o image_grabber.o image_s
 	$(CC) $(UT_OBJ) $(OBJ_DIR)/image_container.o ./build/obj/image_frame.o ./build/obj/image_grabber.o ./build/obj/image_saver.o ./build/obj/region_picker.o ./src/test/test_picker.cpp -o$(BIN_DIR)/test_picker $(XCB_LIB) $(SFML_LIB)
 
 #IMAGE UPLOADER TESTING
-test_gyazo: sec_stringmod.o net_filestuff.o net_create_header.o net_conncheck.o sec_b64.o upl_image_upload.o sec_md5.o upl_gyazo.o
-	$(CC) -o$(BIN_DIR)/test_gyazo $(OBJ_DIR)/stringmod.o ./build/obj/filestuff.o ./build/obj/create_header.o ./build/obj/conncheck.o ./build/obj/b64.o ./build/obj/image_upload.o ./build/obj/md5.o ./build/obj/gyazo.o ./src/test/uploaders/test_gyazo.cpp $(CURL_LIB) $(CRYP_LIB) \
-	&& $(BIN_DIR)/test_gyazo
+uploader_all: sec_all.o net_all.o upl_all.o
+test_gyazo: $(TEST_DIR)/uploaders/test_gyazo.cpp sec_stringmod.o sec_md5.o net_conncheck.o upl_image_upload.o net_create_header.o
+	$(CC) -o$(BIN_DIR)/test_gyazo $(GYAZO_OBJS) $(TEST_DIR)/uploaders/test_gyazo.cpp $(CURL_LIB) $(CRYP_LIB)
 test_imgur_anon: $(TEST_DIR)/uploaders/test_imgur.cpp sec_stringmod.o upl_image_upload.o net_create_header.o net_filestuff.o upl_imgur_anon.o
-	$(CC) -o$(BIN_DIR)/test_imgur_anon $(IMGUR_ANON_OBJS) $(TEST_DIR)/uploaders/test_imgur.cpp $(CURL_LIB)  \
-	&& $(BIN_DIR)/test_imgur_anon
+	$(CC) -o$(BIN_DIR)/test_imgur_anon $(IMGUR_ANON_OBJS) $(TEST_DIR)/uploaders/test_imgur.cpp $(CURL_LIB)
 
 #net/uploaders
 IMAGE_UPLOAD_INP=$(UPL_DIR)/image_upload.cpp
 IMAGE_UPLOAD_OBJ=$(OBJ_DIR)/upl_image_upload.o
-IMAGE_UPLOAD_OBJS=$(MD5_OBJ) $(B64_OBJ) $(IMAGE_UPLOAD_OBJ)
 IMGUR_ANON_INP=$(UPL_DIR)/imgur_anon.cpp
 IMGUR_ANON_OBJ=$(OBJ_DIR)/upl_imgur_anon.o
 IMGUR_ANON_OBJS=$(STRINGMOD_OBJ) $(IMAGE_UPLOAD_OBJ) $(CREATE_HEADER_OBJ) $(FILESTUFF_OBJ) $(IMGUR_ANON_OBJ)
 GYAZO_INP=$(UPL_DIR)/gyazo.cpp
 GYAZO_OBJ=$(OBJ_DIR)/upl_gyazo.o
+GYAZO_OBJS=$(STRINGMOD_OBJ) $(MD5_OBJ) $(CONNCHECK_OBJ) $(IMAGE_UPLOAD_OBJ) $(CREATE_HEADER_OBJ) $(GYAZO_OBJ)
 
+upl_all.o: upl_image_upload.o upl_imgur_anon.o upl_gyazo.o
+#sec_md5.o sec_b64.o net_conncheck.o
 upl_image_upload.o: $(IMAGE_UPLOAD_INP)
 	$(CC) -c -o$(IMAGE_UPLOAD_OBJ) $(IMAGE_UPLOAD_INP) $(CURL_DEV)
+#sec_stringmod.o net_conncheck.o upl_image_upload.o net_create_header.o ./src/json.hpp net_filestuff.o
 upl_imgur_anon.o: $(IMGUR_ANON_INP)
 	$(CC) -c -o$(IMGUR_ANON_OBJ) $(IMGUR_ANON_INP)
+#sec_stringmod.o sec_md5.o net_conncheck.o upl_image_upload.o net_create_header.o
 upl_gyazo.o: $(GYAZO_INP)
 	$(CC) -c -o$(GYAZO_OBJ) $(GYAZO_INP) $(CURL_DEV)
 #net
 FILESTUFF_INP=$(NET_DIR)/filestuff.cpp
 FILESTUFF_OBJ=$(OBJ_DIR)/net_filestuff.o
-FILESTUFF_DEPENDENCIES=./src/json.hpp
 CREATE_HEADER_INP=$(NET_DIR)/create_header.cpp
 CREATE_HEADER_OBJ=$(OBJ_DIR)/net_create_header.o
 CONNCHECK_INP=$(NET_DIR)/conncheck.cpp
 CONNCHECK_OBJ=$(OBJ_DIR)/net_conncheck.o
 
+net_all.o: net_filestuff.o net_create_header.o net_conncheck.o
 net_filestuff.o: $(FILESTUFF_INP)
 	$(CC) -c -o$(FILESTUFF_OBJ) $(FILESTUFF_INP)
+#sec_stringmod.o
 net_create_header.o: $(CREATE_HEADER_INP)
 	$(CC) -c -o$(CREATE_HEADER_OBJ) $(CREATE_HEADER_INP) $(CURL_DEV)
 net_conncheck.o: $(CONNCHECK_INP)
@@ -182,16 +186,17 @@ B64_INP=$(SEC_DIR)/b64.cpp
 B64_OBJ=$(OBJ_DIR)/sec_b64.o
 MD5_INP=$(SEC_DIR)/md5.cpp
 MD5_OBJ=$(OBJ_DIR)/sec_md5.o
-MD5_DEPEND=sec_stringmod.o
 STRINGMOD_INP=$(SEC_DIR)/stringmod.cpp
 STRINGMOD_OBJ=$(OBJ_DIR)/sec_stringmod.o
 
-sec_b64.o: $(SEC_DIR)/b64.cpp
-	$(CC) -c -o$(OBJ_DIR)/sec_b64.o $(SEC_DIR)/b64.cpp
+sec_all.o: sec_stringmod.o sec_b64.o sec_md5.o
+sec_b64.o: $(B64_INP)
+	$(CC) -c -o$(B64_OBJ) $(B64_INP)
+#sec_stringmod.o
 sec_md5.o: $(MD5_INP)
 	$(CC) -c -o$(MD5_OBJ) $(MD5_INP) $(CRYP_DEV)
-sec_stringmod.o: $(SEC_DIR)/stringmod.cpp
-	$(CC) -c -o$(OBJ_DIR)/sec_stringmod.o $(SEC_DIR)/stringmod.cpp
+sec_stringmod.o: $(STRINGMOD_INP)
+	$(CC) -c -o$(STRINGMOD_OBJ) $(STRINGMOD_INP)
 
 rmdirs:
 	rm ./build --recursive
