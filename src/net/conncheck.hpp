@@ -1,3 +1,5 @@
+#ifndef CONNCHECK_H
+#define CONNCHECK_H
 #include <curl/curl.h>
 #include <string>
 namespace EasyGIF{
@@ -18,3 +20,4 @@ namespace EasyGIF{
     bool CanConnect(CURLcode);
   }
 }
+#endif

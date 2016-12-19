@@ -12,8 +12,8 @@
 namespace EasyGIF{
 	namespace Uploaders{
 		namespace Values{
-			const bool CURL_INITIALISED=false;
-			const bool CURL_CLEANEDUP=false;
+			static bool CURL_INITIALISED=false;
+			static bool CURL_CLEANEDUP=false;
 			const bool DEFAULT_USE_HTTPS=true;
 			const std::string DEFAULT_AGENT="EasyGIF/Base";
 			const std::string DEFAULT_PROXY="";

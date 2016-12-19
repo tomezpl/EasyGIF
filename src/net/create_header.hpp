@@ -1,3 +1,5 @@
+#ifndef CREATEHEADER_H
+#define CREATEHEADER_H
 #include <curl/curl.h>
 #include <vector>
 #include <string>
@@ -39,3 +41,4 @@ namespace EasyGIF{
 		};
   }
 }
+#endif
