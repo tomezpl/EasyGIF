@@ -1,4 +1,5 @@
 #include "overlay.hpp"
+#include <iostream>
 
 using namespace EasyGIF::UI;
 
@@ -17,22 +18,22 @@ void Overlay::Init()
 	m_Screen = DefaultScreen(m_Display);
 	m_RootWnd = RootWindow(m_Display, m_Screen);
 
-	XCompositeRedirectSubwindows(m_Display, m_RootWnd, CompositeRedirectAutomatic);
-	XSelectInput(m_Display, m_RootWnd, SubstructureNotifyMask);
+	/*XCompositeRedirectSubwindows(m_Display, m_RootWnd, CompositeRedirectAutomatic);
+	XSelectInput(m_Display, m_RootWnd, SubstructureNotifyMask);*/
 
 	m_Width = DisplayWidth(m_Display, m_Screen);
 	m_Height = DisplayHeight(m_Display, m_Screen);
 
-	m_Overlay = XCompositeGetOverlayWindow(m_Display, m_RootWnd);
+	//m_Overlay = XCompositeGetOverlayWindow(m_Display, m_RootWnd);
 
-	XserverRegion region = XFixesCreateRegion(m_Display, nullptr, 0);
+	/*XserverRegion region = XFixesCreateRegion(m_Display, nullptr, 0);
 	XFixesSetWindowShapeRegion(m_Display, m_Overlay, ShapeBounding, 0, 0, 0);
 	XFixesSetWindowShapeRegion(m_Display, m_Overlay, ShapeInput, 0, 0, region);
-	XFixesDestroyRegion(m_Display, region);
+	XFixesDestroyRegion(m_Display, region);*/
 
-	m_Surface = cairo_xlib_surface_create(m_Display, m_Overlay, DefaultVisual(m_Display, m_Screen), m_Width, m_Height);
+	m_Surface = cairo_xlib_surface_create(m_Display, m_RootWnd, DefaultVisual(m_Display, m_Screen), m_Width, m_Height);
 	m_Context = cairo_create(m_Surface);
-	XSelectInput(m_Display, m_Overlay, ExposureMask);
+	XSelectInput(m_Display, m_RootWnd, ExposureMask);
 }
 
 void Overlay::Draw()
@@ -44,9 +45,10 @@ void Overlay::Draw()
 
 void Overlay::Display()
 {
-	m_Overlay = XCompositeGetOverlayWindow(m_Display, m_RootWnd);
+	//m_Overlay = XCompositeGetOverlayWindow(m_Display, m_RootWnd);
+	std::cout << "OverlayWnd: " << m_Overlay << std::endl << "RootWnd: " << m_RootWnd << std::endl;
 	this->Draw();
-	XCompositeReleaseOverlayWindow(m_Display, m_RootWnd);
+	//XCompositeReleaseOverlayWindow(m_Display, m_RootWnd);
 }
 
 void Overlay::Shutdown()

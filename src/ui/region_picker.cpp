@@ -25,8 +25,8 @@ void RegionPicker::getDesktopSprite()
 	m_WinHeight = desktopScreenshot.GetHeight();
 	m_DesktopTexture.create(m_WinWidth, m_WinHeight);
 	m_DesktopTexture.loadFromImage(m_Converter.ImgFrameToSFImage(desktopScreenshot));
-	//m_Desktop.setTexture(m_DesktopTexture);
-	//m_Desktop.setPosition(0, 0);
+	m_Desktop.setTexture(m_DesktopTexture);
+	m_Desktop.setPosition(0, 0);
 }
 
 void RegionPicker::Activate()
@@ -35,9 +35,10 @@ void RegionPicker::Activate()
 	#ifdef EZGIF_DEBUG
 	std::cout << "RegionPicker " << std::to_string(m_WinWidth) << "x" << std::to_string(m_WinHeight) << std::endl;
 	#endif
-	//m_Window.create(sf::VideoMode(m_WinWidth, m_WinHeight), "EasyGIF RegionPicker", sf::Style::Fullscreen);
+	m_Window.create(sf::VideoMode(m_WinWidth, m_WinHeight), "EasyGIF RegionPicker", sf::Style::None);
+	m_Window.setPosition(sf::Vector2i(0, 0));
 	m_IsRunning = true;
-	m_Overlay = new RectOverlay();
+	//m_Overlay = new RectOverlay();
 }
 
 ::EasyGIF::Utility::Rectangle RegionPicker::GetRect()
@@ -95,7 +96,7 @@ void RegionPicker::ProcessInput()
 
 void RegionPicker::UpdateEvents()
 {
-	/*if(m_Window.isOpen())
+	if(m_Window.isOpen())
 	{
 		sf::Event event;
 		while(m_Window.pollEvent(event))
@@ -111,7 +112,7 @@ void RegionPicker::UpdateEvents()
 					m_IsConfirmed = true;
 			}
 		}
-	}*/
+	}/*
 	if(sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
 	{
 		m_IsConfirmed = true;
@@ -119,13 +120,15 @@ void RegionPicker::UpdateEvents()
 	else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 	{
 		this->Shutdown();
-	}
+	}*/
 }
 
 void RegionPicker::Draw()
 {
-	/*if(m_Window.isOpen())
+	if(m_Window.isOpen())
 	{
+		m_Window.setPosition(sf::Vector2i(0, 0));
+
 		sf::Texture selectionTexture;
 		sf::Image selectionTextureImg;
 		sf::Sprite selection;
@@ -145,7 +148,7 @@ void RegionPicker::Draw()
 
 			selection.setTexture(selectionTexture);
 			selection.setColor(sf::Color(64, 64, 64, 64));
-			*/
+			
 			unsigned short xPos = 0, yPos = 0;
 			if(m_XInverted)
 				xPos = m_Region.x - std::abs(m_Region.width);
@@ -157,7 +160,7 @@ void RegionPicker::Draw()
 			else
 				yPos = m_Region.y;
 
-			/*selection.setPosition(xPos, yPos);
+			selection.setPosition(xPos, yPos);
 		}
 
 		m_Window.clear();
@@ -165,21 +168,21 @@ void RegionPicker::Draw()
 		if(m_Region.width != 0 && m_Region.height != 0 && m_Region.width < m_WinWidth && m_Region.height < m_WinHeight)
 			m_Window.draw(selection);
 		m_Window.display();
-	}*/
+	}/*
 	m_Overlay->GetRectPtr()->x = xPos;
 	m_Overlay->GetRectPtr()->y = yPos;
 	m_Overlay->GetRectPtr()->width = std::abs(m_Region.width);
 	m_Overlay->GetRectPtr()->height = std::abs(m_Region.height);
-	m_Overlay->Display();
+	m_Overlay->Display();*/
 }
 
 void RegionPicker::Shutdown()
 {
 	m_IsRunning = false;
 
-	//m_Window.clear();
-	//m_Window.draw(m_Desktop);
-	//m_Window.display();
+	m_Window.clear();
+	m_Window.draw(m_Desktop);
+	m_Window.display();
 
-	//m_Window.close();
+	m_Window.close();
 }
