@@ -12,7 +12,7 @@ void RectOverlay::Draw()
 {
 	// TODO: the code contains hard-coded colour values
 
-	cairo_set_source_rgb(m_Context, 0.25, 0.25, 0.25);
+	cairo_set_source_rgba(m_Context, 0.25, 0.25, 0.25, 0.01);
 	std::cout << "RectX: " << m_Rect.x << ", RectY: " << m_Rect.y << ", RectWidth: " << m_Rect.width << ", RectHeight: " << m_Rect.height << std::endl;
 	cairo_rectangle(m_Context, m_Rect.x, m_Rect.y, m_Rect.width, m_Rect.height);
 	cairo_fill(m_Context);
