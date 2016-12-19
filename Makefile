@@ -21,6 +21,14 @@ SFML_LIB=`pkg-config --libs sfml-audio sfml-graphics sfml-network sfml-system sf
 XCB_DEV=`pkg-config --cflags xcb xcb-image xcb-util`
 XCB_LIB=`pkg-config --libs xcb xcb-image xcb-util`
 
+## XLIB
+X11_DEV=`pkg-config --cflags x11 xcomposite xfixes`
+X11_LIB=`pkg-config --libs x11 xcomposite xfixes`
+
+## CAIRO
+CAIRO_DEV=`pkg-config --cflags cairo cairo-xlib`
+CAIRO_LIB=`pkg-config --libs cairo cairo-xlib`
+
 ## GTK+
 GTK_DEV=`pkg-config --cflags gtk+-3.0 gmodule-2.0`
 GTK_LIB=`pkg-config --libs gtk+-3.0 gmodule-2.0`
@@ -52,7 +60,7 @@ IMG_OBJ=$(OBJ_DIR)/image_container.o $(OBJ_DIR)/image_frame.o $(OBJ_DIR)/image_g
 IMG_GIF_OBJ=$(IMG_OBJ) $(OBJ_DIR)/image_gif.o $(OBJ_DIR)/gif_enc.o
 
 ### UI OBJECTS
-UI_OBJ=$(OBJ_DIR)/region_picker.o
+UI_OBJ=$(OBJ_DIR)/region_picker.o $(OBJ_DIR)/overlay.o $(OBJ_DIR)/rect_overlay.o
 
 ### APP OBJECTS
 APP_OBJ=$(OBJ_DIR)/screenshot.o $(OBJ_DIR)/screenshot_static.o $(OBJ_DIR)/screenshot_gif.o
@@ -72,10 +80,10 @@ install: set_install_flag mkdirs app
 debug:
 	$(eval CC += $(DEBUG_FLAG))
 
-all_targets: image_container.o image_frame.o image_gif.o image_grabber.o image_saver.o gif_enc.o region_picker.o screenshot.o xhelper.o converter.o file_system.o
+all_targets: image_container.o image_frame.o image_gif.o image_grabber.o image_saver.o gif_enc.o overlay.o rect_overlay.o region_picker.o screenshot.o xhelper.o converter.o file_system.o
 
 app: all_targets src/app/main.cpp
-	$(CC) -o$(BIN_DIR)/easygif ./src/app/main.cpp $(APP_OBJ) $(IMG_GIF_OBJ) $(UI_OBJ) $(UT_OBJ) $(XCB_LIB) $(SFML_LIB) $(GTK_DEV) $(GTK_LIB)
+	$(CC) -o$(BIN_DIR)/easygif ./src/app/main.cpp $(APP_OBJ) $(IMG_GIF_OBJ) $(UI_OBJ) $(UT_OBJ) $(XCB_LIB) $(SFML_LIB) $(GTK_DEV) $(GTK_LIB) $(X11_LIB) $(CAIRO_LIB)
 
 test_build: mkdirs
 	$(CC) -o$(BIN_DIR)/test_build ./src/test/test_build.cpp \
@@ -120,7 +128,13 @@ virtual_desktop.o: src/ui/virtual_desktop.cpp
 	$(CC) -c -o$(OBJ_DIR)/virtual_desktop.o ./src/ui/virtual_desktop.cpp $(XCB_DEV)
 
 region_picker.o: src/ui/region_picker.cpp
-	$(CC) -c -o$(OBJ_DIR)/region_picker.o ./src/ui/region_picker.cpp $(XCB_DEV) $(SFML_DEV)
+	$(CC) -c -o$(OBJ_DIR)/region_picker.o ./src/ui/region_picker.cpp $(XCB_DEV) $(SFML_DEV) $(X11_DEV) $(CAIRO_DEV)
+
+overlay.o: src/ui/overlay.cpp
+	$(CC) -c -o$(OBJ_DIR)/overlay.o ./src/ui/overlay.cpp $(X11_DEV) $(CAIRO_DEV)
+
+rect_overlay.o: src/ui/rect_overlay.cpp
+	$(CC) -c -o$(OBJ_DIR)/rect_overlay.o ./src/ui/rect_overlay.cpp $(X11_DEV) $(CAIRO_DEV)
 
 screenshot.o: src/app/screenshot/screenshot.cpp src/app/screenshot/screenshot_static.cpp src/app/screenshot/screenshot_gif.cpp
 	$(CC) -c -o$(OBJ_DIR)/screenshot.o ./src/app/screenshot/screenshot.cpp $(XCB_DEV) $(SFML_DEV)
