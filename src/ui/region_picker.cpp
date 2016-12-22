@@ -35,7 +35,7 @@ void RegionPicker::Activate()
 	#ifdef EZGIF_DEBUG
 	std::cout << "RegionPicker " << std::to_string(m_WinWidth) << "x" << std::to_string(m_WinHeight) << std::endl;
 	#endif
-	m_Window.create(sf::VideoMode(m_WinWidth, m_WinHeight), "EasyGIF RegionPicker", sf::Style::None);
+	m_Window.create(sf::VideoMode(m_WinWidth, m_WinHeight), "EasyGIF RegionPicker", sf::Style::Fullscreen);
 	m_Window.setPosition(sf::Vector2i(0, 0));
 	m_IsRunning = true;
 	//m_Overlay = new RectOverlay();
