@@ -6,8 +6,7 @@
 #define IMAGE_SPLIT_SETTINGS
 #include <string>
 #include <curl/curl.h>
-#include "../../sec/md5.hpp"
-#include "../../sec/b64.hpp"
+#include <vector>
 #include "../conncheck.hpp"
 namespace EasyGIF{
 	namespace Uploaders{
@@ -21,9 +20,7 @@ namespace EasyGIF{
 		std::string GetLastExtension(std::string path);
 		void CURL_init();
 		void CURL_cleanup();
-		bool CanConnectToImgur(bool);
-		bool CanConectToImgur();
-		bool UploadFileToImgur(std::string);
+
 		struct MultipartData{
 			int type;
 			std::string value;

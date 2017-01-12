@@ -42,9 +42,9 @@ namespace EasyGIF{
     }
     std::vector<std::string> getCookies(std::string fp){return getCookies(fp.c_str());}
     //Parse JSON File
-     void parseJSONData(std::string json_data,json* jason){(*jason)=json::parse(json_data);}
-     void parseJSONFile(std::string file_path,json* jason){parseJSONFile(file_path.c_str(),jason);}
-     void parseJSONFile(const char* file_path,json* jason){
+    void parseJSONData(std::string json_data,json* jason){(*jason)=json::parse(json_data);}
+    void parseJSONFile(std::string file_path,json* jason){parseJSONFile(file_path.c_str(),jason);}
+    void parseJSONFile(const char* file_path,json* jason){
       std::string file_data=readTextFile(file_path);
       parseJSONData(file_data,jason);
     }

@@ -5,17 +5,17 @@
 #include <vector>
 #include <curl/curl.h>
 #include <cstdlib>
+#include "../../sec/md5.hpp"
 #include "../create_header.hpp"
 namespace EasyGIF{
 	namespace Uploaders{
 		namespace Gyazo{
 			#ifdef IMAGE_SPLIT_SETTINGS
-				namespace Values{
-					static bool DEFAULT_GYAZO_USE_HTTPS=true;
-					static std::string DEFAULT_GYAZO_AGENT="";
-					static std::string DEFAULT_GYAZO_PROXY="";
-				}
+				const bool DEFAULT_GYAZO_USE_HTTPS=true;
+				const std::string DEFAULT_GYAZO_AGENT="";
+				const std::string DEFAULT_GYAZO_PROXY="";
 			#endif
+			std::string GetDefaultUploadURL();
 			std::string GetUploadURL(bool use_https);
 			std::string GetUploadURL();
 			std::string GetMD5Page(bool use_https,std::string md5_digest);
@@ -30,6 +30,7 @@ namespace EasyGIF{
 			bool GetDefaultUseHTTPS();
 			struct GyazoUploadSettings{
 				EasyGIF::Uploaders::CurlUploadSettings upload_settings;
+				std::string file_extension;
 				std::string gyazo_id;
 				bool use_https;
 			};
@@ -56,17 +57,16 @@ namespace EasyGIF{
 					GyazoImageUploader* SetGyazoID(std::string new_id);
 					GyazoImageUploader* SetGyazoID(std::string new_id,bool parse);
 					GyazoImageUploader* SetUseHTTPS(bool use_https);
+					bool HasLastUpload();
 					GyazoCompletedUpload* GetLastUpload();
-					int UploadFile(GyazoUploadSettings upload_settings,GyazoCompletedUpload* uploaded_info);
-					int UploadFile(std::string file,GyazoCompletedUpload* uploaded_info);
-					int UploadFile(std::string file);
 			};
 			std::string GetRandomID(int);
 			std::string ParseGID(std::string);
 
 			//void SetUploadSettings(GyazoUploadSettings* upload_settings,std::string file_path,std::string file_name,std::string extension,)
 		}
-		int UploadFileToGyazo(std::string file,EasyGIF::Uploaders::Gyazo::GyazoCompletedUpload* result);
+		int UploadImage(Gyazo::GyazoUploadSettings upload_settings,Gyazo::GyazoCompletedUpload* result);
+		int UploadFileToGyazo(std::string file,Gyazo::GyazoCompletedUpload* result);
 		EasyGIF::Uploaders::Gyazo::GyazoCompletedUpload* UploadFileToGyazo(std::string file);
 		//Bool parameters = https
 		bool CanConnectToGyazo(bool use_https);

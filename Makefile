@@ -154,9 +154,9 @@ test_picker: converter.o image_container.o image_frame.o image_grabber.o image_s
 #IMAGE UPLOADER TESTING
 uploader_all: sec_all.o net_all.o upl_all.o
 test_gyazo: $(TEST_DIR)/uploaders/test_gyazo.cpp sec_stringmod.o sec_md5.o net_conncheck.o upl_image_upload.o net_create_header.o
-	$(CC) -o$(BIN_DIR)/test_gyazo $(GYAZO_OBJS) $(TEST_DIR)/uploaders/test_gyazo.cpp $(CURL_LIB) $(CRYP_LIB)
+	$(CC) -o $(BIN_DIR)/test_gyazo $(GYAZO_OBJS) $(TEST_DIR)/uploaders/test_gyazo.cpp $(CURL_LIB) $(CRYP_LIB)
 test_imgur_anon: $(TEST_DIR)/uploaders/test_imgur.cpp sec_stringmod.o upl_image_upload.o net_create_header.o net_filestuff.o upl_imgur_anon.o
-	$(CC) -o$(BIN_DIR)/test_imgur_anon $(IMGUR_ANON_OBJS) $(TEST_DIR)/uploaders/test_imgur.cpp $(CURL_LIB)
+	$(CC) -o $(BIN_DIR)/test_imgur_anon $(IMGUR_ANON_OBJS) $(TEST_DIR)/uploaders/test_imgur.cpp $(CURL_LIB)
 
 #net/uploaders
 IMAGE_UPLOAD_INP=$(UPL_DIR)/image_upload.cpp
